@@ -1,33 +1,53 @@
 package classes;
 
+import classes.Enumerations.CategoriaEnum;
+import classes.Enumerations.RegioneEnum;
+
+
+
+import java.time.LocalDateTime;
+
+import java.util.List;
+
 public class Evento {
+    private Integer id;
     private String nome;
     private String descrizione;
-    private Integer dataEvento;
-    private Integer oraEvento;
+    private LocalDateTime dataOra;
+    private Utente utenteOrganizzatore;
+    private List<CategoriaEnum> categorieEvento;
+    private RegioneEnum luogoEvento;
+    private Foto fotoEvento;
     private boolean privato;
-    private String Indirizzo;
+    private String indirizzo;
     private Integer postiTotali;
     private Integer postiDisponibili;
     private Integer postiOccupati;
 
-    public Evento(String nome, String descrizione, Integer dataEvento, Integer oraEvento, boolean privato, String indirizzo, Integer postiTotali, Integer postiDisponibili) {
+    public Evento(Integer id, String nome, String descrizione, LocalDateTime dataOra, Utente utenteOrganizzatore,
+                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento, boolean privato,
+                  String indirizzo, Integer postiTotali, Integer postiDisponibili, Integer postiOccupati) {
+        this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
-        this.dataEvento = dataEvento;
-        this.oraEvento = oraEvento;
+        this.dataOra = dataOra;
+        this.utenteOrganizzatore = utenteOrganizzatore;
+        this.categorieEvento = categorieEvento;
+        this.luogoEvento = luogoEvento;
+        this.fotoEvento = fotoEvento;
         this.privato = privato;
-        Indirizzo = indirizzo;
+        this.indirizzo = indirizzo;
         this.postiTotali = postiTotali;
         this.postiDisponibili = postiDisponibili;
+        this.postiOccupati = postiOccupati;
     }
 
-    public Integer getOraEvento() {
-        return oraEvento;
+    public LocalDateTime getDataOra() {
+        return dataOra;
     }
 
-    public void setOraEvento(Integer oraEvento) {
-        this.oraEvento = oraEvento;
+    public void setDataOra(LocalDateTime dataOra) {
+        this.dataOra = dataOra;
     }
 
     public String getNome() {
@@ -46,14 +66,6 @@ public class Evento {
         this.descrizione = descrizione;
     }
 
-    public Integer getDataEvento() {
-        return dataEvento;
-    }
-
-    public void setDataEvento(Integer dataEvento) {
-        this.dataEvento = dataEvento;
-    }
-
     public boolean isPrivato() {
         return privato;
     }
@@ -63,11 +75,11 @@ public class Evento {
     }
 
     public String getIndirizzo() {
-        return Indirizzo;
+        return indirizzo;
     }
 
     public void setIndirizzo(String indirizzo) {
-        Indirizzo = indirizzo;
+        indirizzo = indirizzo;
     }
 
     public Integer getPostiTotali() {
@@ -92,5 +104,53 @@ public class Evento {
 
     public void setPostiOccupati(Integer postiOccupati) {
         this.postiOccupati = postiOccupati;
+    }
+
+    public RegioneEnum getLuogo() {
+        return luogoEvento;
+    }
+
+    public void setLuogo(RegioneEnum luogoEvento) {
+        this.luogoEvento = luogoEvento;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Utente getUtenteOrganizzatore() {
+        return utenteOrganizzatore;
+    }
+
+    public void setUtenteOrganizzatore(Utente utenteOrganizzatore) {
+        this.utenteOrganizzatore = utenteOrganizzatore;
+    }
+
+    public List<CategoriaEnum> getCategorieEvento() {
+        return categorieEvento;
+    }
+
+    public void setCategorieEvento(List<CategoriaEnum> categorieEvento) {
+        this.categorieEvento = categorieEvento;
+    }
+
+    public RegioneEnum getLuogoEvento() {
+        return luogoEvento;
+    }
+
+    public void setLuogoEvento(RegioneEnum luogoEvento) {
+        this.luogoEvento = luogoEvento;
+    }
+
+    public Foto getFotoEvento() {
+        return fotoEvento;
+    }
+
+    public void setFotoEvento(Foto fotoEvento) {
+        this.fotoEvento = fotoEvento;
     }
 }

@@ -1,5 +1,10 @@
 package classes;
 
+import classes.Enumerations.CategoriaEnum;
+
+
+import java.util.List;
+
 public class Utente {
     private Integer id;
     private String nome;
@@ -8,8 +13,9 @@ public class Utente {
     private String genere;
     private String indirizzoMail;
     private Integer numeroTelefono;
+    private List<CategoriaEnum> interessi;
 
-    public Utente(Integer id, String nome, String cognome, Integer eta, String genere, String indirizzoMail, Integer numeroTelefono) {
+    public Utente(Integer id, String nome, String cognome, Integer eta, String genere, String indirizzoMail, Integer numeroTelefono, List<CategoriaEnum> interessi) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -17,6 +23,7 @@ public class Utente {
         this.genere = genere;
         this.indirizzoMail = indirizzoMail;
         this.numeroTelefono = numeroTelefono;
+        this.interessi = interessi;
     }
 
     public Integer getId() {
@@ -73,5 +80,13 @@ public class Utente {
 
     public void setNumeroTelefono(Integer numeroTelefono) {
         this.numeroTelefono = numeroTelefono;
+    }
+
+    public List<CategoriaEnum> getInteressi() {
+        return interessi;
+    }
+
+    public void setInteressi(List<CategoriaEnum> interessi) {
+        this.interessi = interessi;
     }
 }
