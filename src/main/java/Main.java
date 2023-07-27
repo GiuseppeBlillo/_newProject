@@ -1,13 +1,16 @@
 import classes.Enumerations.CategoriaEnum;
-import classes.Utente;
+import classes.Models.Utente;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<CategoriaEnum> listaPietro = new ArrayList<>();
-        listaPietro.add(10, CategoriaEnum.SPORTEFITNESS);
-        Utente u = new Utente(1,"pietro","croce", 32, "maschio", "pietrocross@cross.it", 800900313, listaPietro);
+        Utente u = new Utente(1, "pippo", "franco", 18, "pippofranco@intellij.com");
+        List<CategoriaEnum> listaInteressi = new ArrayList<>();
+        listaInteressi.add(CategoriaEnum.RELIGIONE);
+        listaInteressi.add(CategoriaEnum.SPORTEFITNESS);
+        listaInteressi.add(CategoriaEnum.RELIGIONE);
+        u.setInteressiUtente(listaInteressi);
     }
 }

@@ -9,4 +9,12 @@ public enum TipoUtenteEnum {
     TipoUtenteEnum(String permessiUtente) {
         this.permessiUtente = permessiUtente;
     }
+
+    public String getPermessiUtente() {
+        return permessiUtente;
+    }
+
+    public void setPermessiUtente(String permessiUtente) {
+        this.permessiUtente = permessiUtente;
+    }
 }

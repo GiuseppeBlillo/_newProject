@@ -1,8 +1,7 @@
-package classes;
+package classes.Models;
 
 import classes.Enumerations.CategoriaEnum;
 import classes.Enumerations.RegioneEnum;
-
 
 
 import java.time.LocalDateTime;
