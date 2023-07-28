@@ -13,8 +13,6 @@ public class Utente {
     private String genereUtente;
     private String indirizzoMailUtente;
     private Integer numeroTelefonoUtente;
-    private List<CategoriaEnum> interessiUtente;
-
 
     public Utente(Integer id, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
         this.id = id;
@@ -80,13 +78,6 @@ public class Utente {
         this.numeroTelefonoUtente = numeroTelefonoUtente;
     }
 
-    public List<CategoriaEnum> getInteressiUtente() {
-        return interessiUtente;
-    }
-
-    public void setInteressiUtente(List<CategoriaEnum> interessiUtente) {
-        this.interessiUtente = interessiUtente;
-    }
 }
 
 
