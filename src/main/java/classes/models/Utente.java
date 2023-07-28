@@ -1,6 +1,6 @@
-package classes.Models;
+package classes.models;
 
-import classes.Enumerations.CategoriaEnum;
+import classes.enumerations.CategoriaEnum;
 
 
 import java.util.List;

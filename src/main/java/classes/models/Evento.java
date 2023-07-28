@@ -1,7 +1,7 @@
-package classes.Models;
+package classes.models;
 
-import classes.Enumerations.CategoriaEnum;
-import classes.Enumerations.RegioneEnum;
+import classes.enumerations.CategoriaEnum;
+import classes.enumerations.RegioneEnum;
 
 
 import java.time.LocalDateTime;
@@ -14,17 +14,15 @@ public class Evento {
     private String descrizione;
     private LocalDateTime dataOra;
     private Utente utenteOrganizzatore;
-    private List<CategoriaEnum> categorieEvento;
+    private CategoriaEnum categorieEvento;
     private RegioneEnum luogoEvento;
     private Foto fotoEvento;
     private boolean privato;
     private String indirizzo;
     private Integer postiTotali;
-    private Integer postiDisponibili;
-    private Integer postiOccupati;
 
     public Evento(Integer id, String nome, String descrizione, LocalDateTime dataOra, Utente utenteOrganizzatore,
-                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento, boolean privato,
+                  CategoriaEnum categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento, boolean privato,
                   String indirizzo, Integer postiTotali, Integer postiDisponibili, Integer postiOccupati) {
         this.id = id;
         this.nome = nome;
@@ -37,8 +35,6 @@ public class Evento {
         this.privato = privato;
         this.indirizzo = indirizzo;
         this.postiTotali = postiTotali;
-        this.postiDisponibili = postiDisponibili;
-        this.postiOccupati = postiOccupati;
     }
 
     public LocalDateTime getDataOra() {
@@ -89,22 +85,6 @@ public class Evento {
         this.postiTotali = postiTotali;
     }
 
-    public Integer getPostiDisponibili() {
-        return postiDisponibili;
-    }
-
-    public void setPostiDisponibili(Integer postiDisponibili) {
-        this.postiDisponibili = postiDisponibili;
-    }
-
-    public Integer getPostiOccupati() {
-        return postiOccupati;
-    }
-
-    public void setPostiOccupati(Integer postiOccupati) {
-        this.postiOccupati = postiOccupati;
-    }
-
     public RegioneEnum getLuogo() {
         return luogoEvento;
     }
@@ -129,11 +109,11 @@ public class Evento {
         this.utenteOrganizzatore = utenteOrganizzatore;
     }
 
-    public List<CategoriaEnum> getCategorieEvento() {
+    public CategoriaEnum getCategorieEvento() {
         return categorieEvento;
     }
 
-    public void setCategorieEvento(List<CategoriaEnum> categorieEvento) {
+    public void setCategorieEvento(CategoriaEnum categorieEvento) {
         this.categorieEvento = categorieEvento;
     }
 

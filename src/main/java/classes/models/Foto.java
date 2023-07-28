@@ -1,9 +1,9 @@
-package classes.Models;
+package classes.models;
 
 public class Foto {
 
     private Integer id;
-    private String url;
+    private String url; //da modificare classe
 
     public Foto(Integer id, String url) {
         this.id = id;

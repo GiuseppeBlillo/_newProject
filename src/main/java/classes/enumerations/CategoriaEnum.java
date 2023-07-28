@@ -1,4 +1,4 @@
-package classes.Enumerations;
+package classes.enumerations;
 
 public enum CategoriaEnum {
     SPORTEFITNESS(1),

@@ -1,5 +1,5 @@
-import classes.Enumerations.CategoriaEnum;
-import classes.Models.Utente;
+import classes.enumerations.CategoriaEnum;
+import classes.models.Utente;
 
 import java.util.ArrayList;
 import java.util.List;
