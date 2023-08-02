@@ -11,6 +11,6 @@ public class Main {
         listaInteressi.add(CategoriaEnum.RELIGIONE);
         listaInteressi.add(CategoriaEnum.SPORTEFITNESS);
         listaInteressi.add(CategoriaEnum.RELIGIONE);
-        u.setInteressiUtente(listaInteressi);
+
     }
 }
