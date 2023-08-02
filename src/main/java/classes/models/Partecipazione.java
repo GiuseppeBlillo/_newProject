@@ -1,22 +1,30 @@
 package classes.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Partecipazione {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idPartecipazione;
+    @Column(nullable = false)
     private Utente idUtente;
+    @Column(nullable = false)
     private Evento idEvento;
 
-    public Partecipazione(Integer id, Utente idUtente, Evento idEvento) {
-        this.id = id;
+    public Partecipazione(Integer idPartecipazione, Utente idUtente, Evento idEvento) {
+        this.idPartecipazione = idPartecipazione;
         this.idUtente = idUtente;
         this.idEvento = idEvento;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdPartecipazione() {
+        return idPartecipazione;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdPartecipazione(Integer id) {
+        this.idPartecipazione = idPartecipazione;
     }
 
     public Utente getIdUtente() {
