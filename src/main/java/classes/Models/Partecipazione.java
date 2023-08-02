@@ -1,8 +1,16 @@
 package classes.Models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Partecipazione {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private Utente idUtente;
+    @Column(nullable = false)
     private Evento idEvento;
 
     public Partecipazione(Integer id, Utente idUtente, Evento idEvento) {

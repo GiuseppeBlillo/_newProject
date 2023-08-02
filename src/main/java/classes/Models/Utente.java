@@ -1,35 +1,52 @@
 package classes.Models;
 
 import classes.Enumerations.CategoriaEnum;
+import jakarta.persistence.*;
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Entity
+@Table
 public class Utente {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idUtente;
+    @Column(nullable = false)
     private String nomeUtente;
+    @Column(nullable = false)
     private String cognomeUtente;
+    @Column(nullable = false)
     private Integer etaUtente;
-    private String genereUtente;
+    @Column(unique = true,nullable = false)
     private String indirizzoMailUtente;
+    @Column(unique = true,nullable = false)
     private Integer numeroTelefonoUtente;
     private List<CategoriaEnum> interessiUtente;
+    @ManyToMany
+    @JoinTable(name ="Partecipazione",
+    joinColumns = {@JoinColumn(name = "idUtente")},
+    inverseJoinColumns = { @JoinColumn(name = "idEvento")})
+    private List<Evento> eventi = new ArrayList<>();
 
 
-    public Utente(Integer id, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
-        this.id = id;
+    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
+        this.idUtente = idUtente;
         this.nomeUtente = nomeUtente;
         this.cognomeUtente = cognomeUtente;
         this.etaUtente = etaUtente;
         this.indirizzoMailUtente = indirizzoMailUtente;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUtente() {
+        return idUtente;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUtente(Integer id) {
+        this.idUtente = idUtente;
     }
 
     public String getNomeUtente() {
@@ -54,14 +71,6 @@ public class Utente {
 
     public void setEtaUtente(Integer etaUtente) {
         this.etaUtente = etaUtente;
-    }
-
-    public String getGenereUtente() {
-        return genereUtente;
-    }
-
-    public void setGenereUtente(String genereUtente) {
-        this.genereUtente = genereUtente;
     }
 
     public String getIndirizzoMailUtente() {
