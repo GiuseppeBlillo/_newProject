@@ -1,19 +1,26 @@
 package classes.models;
 
+import jakarta.persistence.*;
+
 import java.util.List;
-
+@Entity
+@Table
 public class Recensione {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Utente idUtenteRecensione;
+
+    private Utente idUtente;
+    @Column(nullable = false)
     private Evento idEvento;
     private String campoTestuale;
+    @Column(nullable = false)
     private Integer rating;
     private List<Foto> foto;
 
-    public Recensione(Integer id, Utente idUtenteRecensione, Evento idEvento, String campoTestuale, Integer rating) {
+    public Recensione(Integer id, Utente idUtente, Evento idEvento, String campoTestuale, Integer rating) {
         this.id = id;
-        this.idUtenteRecensione = idUtenteRecensione;
+        this.idUtente = idUtente;
         this.idEvento = idEvento;
         this.campoTestuale = campoTestuale;
         this.rating = rating;
@@ -24,11 +31,11 @@ public class Recensione {
     }
 
     public Utente getIdUtenteRecensione() {
-        return idUtenteRecensione;
+        return idUtente;
     }
 
     public void setIdUtenteRecensione(Utente idUtenteRecensione) {
-        this.idUtenteRecensione = idUtenteRecensione;
+        this.idUtente = idUtente;
     }
 
     public Evento getIdEvento() {
