@@ -1,33 +1,51 @@
 package classes.models;
 
 import classes.enumerations.CategoriaEnum;
+import jakarta.persistence.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table
 public class Utente {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idUtente;
+    @Column(nullable = false)
     private String nomeUtente;
+    @Column(nullable = false)
     private String cognomeUtente;
+    @Column(nullable = false)
     private Integer etaUtente;
-    private String genereUtente;
+    private List<CategoriaEnum> categorieEvento;
+    @Column(nullable = false,unique = true)
     private String indirizzoMailUtente;
+    @Column(nullable = false,unique = true)
     private Integer numeroTelefonoUtente;
 
-    public Utente(Integer id, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
-        this.id = id;
+    @ManyToMany
+    @JoinTable(name = "Partecipazione",
+    joinColumns = {@JoinColumn(name = "idUtente")},
+    inverseJoinColumns = {@JoinColumn(name = "idEvento")})
+    List<Evento>eventi = new ArrayList<>();
+
+
+
+    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
+        this.idUtente = idUtente;
         this.nomeUtente = nomeUtente;
         this.cognomeUtente = cognomeUtente;
         this.etaUtente = etaUtente;
         this.indirizzoMailUtente = indirizzoMailUtente;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUtente() {
+        return idUtente;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUtente(Integer idUtente) {
+        this.idUtente = idUtente;
     }
 
     public String getNomeUtente() {
@@ -54,12 +72,12 @@ public class Utente {
         this.etaUtente = etaUtente;
     }
 
-    public String getGenereUtente() {
-        return genereUtente;
+    public List<CategoriaEnum> getCategorieEvento() {
+        return categorieEvento;
     }
 
-    public void setGenereUtente(String genereUtente) {
-        this.genereUtente = genereUtente;
+    public void setCategorieEvento(List<CategoriaEnum> categorieEvento) {
+        this.categorieEvento = categorieEvento;
     }
 
     public String getIndirizzoMailUtente() {

@@ -2,39 +2,55 @@ package classes.models;
 
 import classes.enumerations.CategoriaEnum;
 import classes.enumerations.RegioneEnum;
+import jakarta.persistence.*;
 
 
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table
 public class Evento {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idEvento;
+    @Column(nullable = false)
     private String nome;
+
     private String descrizione;
+    @Column(nullable = false)
     private LocalDateTime dataOra;
-    private Utente utenteOrganizzatore;
-    private CategoriaEnum categorieEvento;
+    @Column(nullable = false)
+    private List<CategoriaEnum> categorieEvento;
+    @Column(nullable = false)
     private RegioneEnum luogoEvento;
     private Foto fotoEvento;
+    @Column(nullable = false)
     private boolean privato;
+    @Column(nullable = false)
     private String indirizzo;
     private Integer postiTotali;
+    @Column(nullable = false)
+    private Utente utenteOrganizzatore;
 
-    public Evento(Integer id, String nome, String descrizione, LocalDateTime dataOra, Utente utenteOrganizzatore,
-                  CategoriaEnum categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento, boolean privato,
-                  String indirizzo, Integer postiTotali, Integer postiDisponibili, Integer postiOccupati) {
-        this.id = id;
+    @ManyToMany(mappedBy = "eventi")
+    private List<Utente> utenti = new ArrayList<>();
+
+    public Evento(Integer idEvento, String nome, String descrizione, LocalDateTime dataOra,
+                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento,
+                  boolean privato, String indirizzo, Integer postiTotali, Utente utenteOrganizzatore) {
+        this.idEvento = idEvento;
         this.nome = nome;
         this.descrizione = descrizione;
         this.dataOra = dataOra;
-        this.utenteOrganizzatore = utenteOrganizzatore;
         this.categorieEvento = categorieEvento;
         this.luogoEvento = luogoEvento;
         this.fotoEvento = fotoEvento;
         this.privato = privato;
         this.indirizzo = indirizzo;
         this.postiTotali = postiTotali;
+        this.utenteOrganizzatore = utenteOrganizzatore;
     }
 
     public LocalDateTime getDataOra() {
@@ -74,7 +90,7 @@ public class Evento {
     }
 
     public void setIndirizzo(String indirizzo) {
-        indirizzo = indirizzo;
+        this.indirizzo = indirizzo;
     }
 
     public Integer getPostiTotali() {
@@ -93,12 +109,12 @@ public class Evento {
         this.luogoEvento = luogoEvento;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdEvento() {
+        return idEvento;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdEvento(Integer idEvento) {
+        this.idEvento = idEvento;
     }
 
     public Utente getUtenteOrganizzatore() {
@@ -109,11 +125,11 @@ public class Evento {
         this.utenteOrganizzatore = utenteOrganizzatore;
     }
 
-    public CategoriaEnum getCategorieEvento() {
+    public List<CategoriaEnum> getCategorieEvento() {
         return categorieEvento;
     }
 
-    public void setCategorieEvento(CategoriaEnum categorieEvento) {
+    public void setCategorieEvento(List<CategoriaEnum> categorieEvento) {
         this.categorieEvento = categorieEvento;
     }
 
