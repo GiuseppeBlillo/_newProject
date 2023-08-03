@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table
+@Table(name ="UTENTE")
 public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,8 @@ public class Utente {
     private String indirizzoMailUtente;
     @Column(nullable = false,unique = true)
     private Integer numeroTelefonoUtente;
+    @Column
+    private String urlFotoUtente;
 
     @ManyToMany
     @JoinTable(name = "Partecipazione",
@@ -37,12 +39,13 @@ public class Utente {
     private List<Evento>eventiRecensiti = new ArrayList<>();
 
 
-    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
+    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente, String urlFotoUtente) {
         this.idUtente = idUtente;
         this.nomeUtente = nomeUtente;
         this.cognomeUtente = cognomeUtente;
         this.etaUtente = etaUtente;
         this.indirizzoMailUtente = indirizzoMailUtente;
+        this.urlFotoUtente = urlFotoUtente;
     }
 
     public Integer getIdUtente() {
@@ -97,10 +100,17 @@ public class Utente {
         return numeroTelefonoUtente;
     }
 
+
     public void setNumeroTelefonoUtente(Integer numeroTelefonoUtente) {
         this.numeroTelefonoUtente = numeroTelefonoUtente;
     }
+    public String getUrlFotoUtente() {
+        return urlFotoUtente;
+    }
 
+    public void setUrlFotoUtente(String urlFotoUtente) {
+        this.urlFotoUtente = urlFotoUtente;
+    }
 }
 
 

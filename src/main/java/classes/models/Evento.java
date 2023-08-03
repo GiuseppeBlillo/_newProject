@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table
+@Table(name = "EVENTO")
 public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEvento;
     @Column(nullable = false)
     private String nome;
-
+    @Column
     private String descrizione;
     @Column(nullable = false)
     private LocalDateTime dataOra;
@@ -25,7 +25,8 @@ public class Evento {
     private List<CategoriaEnum> categorieEvento;
     @Column(nullable = false)
     private RegioneEnum luogoEvento;
-    private Foto fotoEvento;
+    @Column
+    private List<Foto> fotoEvento;
     @Column(nullable = false)
     private boolean privato;
     @Column(nullable = false)
@@ -41,7 +42,7 @@ public class Evento {
     private List<Utente> utentiRecensione = new ArrayList<>();
 
     public Evento(Integer idEvento, String nome, String descrizione, LocalDateTime dataOra,
-                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento,
+                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, List<Foto> fotoEvento,
                   boolean privato, String indirizzo, Integer postiTotali, Utente utenteOrganizzatore) {
         this.idEvento = idEvento;
         this.nome = nome;
@@ -144,11 +145,11 @@ public class Evento {
         this.luogoEvento = luogoEvento;
     }
 
-    public Foto getFotoEvento() {
+    public List<Foto> getFotoEvento() {
         return fotoEvento;
     }
 
-    public void setFotoEvento(Foto fotoEvento) {
+    public void setFotoEvento(List<Foto> fotoEvento) {
         this.fotoEvento = fotoEvento;
     }
 }

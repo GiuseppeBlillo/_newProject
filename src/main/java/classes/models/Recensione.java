@@ -2,32 +2,37 @@ package classes.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table
+@Table(name="RECENSIONE")
 public class Recensione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private Integer idRecensione;
+    @Column(nullable = false)
     private Utente idUtente;
     @Column(nullable = false)
     private Evento idEvento;
+    @Column
     private String campoTestuale;
     @Column(nullable = false)
     private Integer rating;
+    @Column
     private List<Foto> foto;
+    @OneToMany(mappedBy = "recensione")
+    private List<Foto> fotos= new ArrayList<>();
 
-    public Recensione(Integer id, Utente idUtente, Evento idEvento, String campoTestuale, Integer rating) {
-        this.id = id;
+    public Recensione(Integer idRecensione, Utente idUtente, Evento idEvento, String campoTestuale, Integer rating) {
+        this.idRecensione = idRecensione;
         this.idUtente = idUtente;
         this.idEvento = idEvento;
         this.campoTestuale = campoTestuale;
         this.rating = rating;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdRecensione() {
+        return idRecensione;
     }
 
     public Utente getIdUtenteRecensione() {
@@ -46,8 +51,8 @@ public class Recensione {
         this.idEvento = idEvento;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdRecensione(Integer idRecensione) {
+        this.idRecensione = idRecensione;
     }
 
     public String getCampoTestuale() {
