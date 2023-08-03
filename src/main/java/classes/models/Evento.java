@@ -37,6 +37,9 @@ public class Evento {
     @ManyToMany(mappedBy = "eventi")
     private List<Utente> utenti = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "eventiRecensiti")
+    private List<Utente> utentiRecensione = new ArrayList<>();
+
     public Evento(Integer idEvento, String nome, String descrizione, LocalDateTime dataOra,
                   List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, Foto fotoEvento,
                   boolean privato, String indirizzo, Integer postiTotali, Utente utenteOrganizzatore) {

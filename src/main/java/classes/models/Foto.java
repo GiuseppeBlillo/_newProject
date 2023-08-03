@@ -1,9 +1,15 @@
 package classes.models;
 
-public class Foto {
+import jakarta.persistence.*;
 
+@Entity
+@Table
+public class Foto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String url; //da modificare classe
+    @Column(nullable = false, unique = true)
+    private String url;
 
     public Foto(Integer id, String url) {
         this.id = id;

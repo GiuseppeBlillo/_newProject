@@ -28,8 +28,13 @@ public class Utente {
     @JoinTable(name = "Partecipazione",
     joinColumns = {@JoinColumn(name = "idUtente")},
     inverseJoinColumns = {@JoinColumn(name = "idEvento")})
-    List<Evento>eventi = new ArrayList<>();
+    private List<Evento>eventi = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "Recensione",
+            joinColumns = {@JoinColumn(name = "idUtente")},
+            inverseJoinColumns = {@JoinColumn(name = "idEvento")})
+    private List<Evento>eventiRecensiti = new ArrayList<>();
 
 
     public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente) {
