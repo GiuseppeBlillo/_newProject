@@ -23,6 +23,16 @@ public class Recensione {
     @OneToMany(mappedBy = "recensione")
     private List<Foto> fotos= new ArrayList<>();
 
+    public Recensione(Integer idRecensione, Utente idUtente, Evento idEvento, String campoTestuale,
+                      Integer rating, List<Foto> foto) {
+        this.idRecensione = idRecensione;
+        this.idUtente = idUtente;
+        this.idEvento = idEvento;
+        this.campoTestuale = campoTestuale;
+        this.rating = rating;
+        this.foto = foto;
+    }
+
     public Recensione(){}
 
     public Integer getIdRecensione() {

@@ -38,6 +38,18 @@ public class Utente {
             inverseJoinColumns = {@JoinColumn(name = "idEvento")})
     private List<Evento>eventiRecensiti = new ArrayList<>();
 
+    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente,
+                  List<CategoriaEnum> categorieEvento, String indirizzoMailUtente, Integer numeroTelefonoUtente,
+                  String urlFotoUtente) {
+        this.idUtente = idUtente;
+        this.nomeUtente = nomeUtente;
+        this.cognomeUtente = cognomeUtente;
+        this.etaUtente = etaUtente;
+        this.categorieEvento = categorieEvento;
+        this.indirizzoMailUtente = indirizzoMailUtente;
+        this.numeroTelefonoUtente = numeroTelefonoUtente;
+        this.urlFotoUtente = urlFotoUtente;
+    }
 
     public Utente(){}
 

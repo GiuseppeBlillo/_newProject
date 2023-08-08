@@ -14,6 +14,12 @@ public class Foto {
     @JoinColumn(name="idRecensione", nullable = false)
     private Recensione recensione;
 
+    public Foto(Integer id, String url, Recensione recensione) {
+        this.id = id;
+        this.url = url;
+        this.recensione = recensione;
+    }
+
     public Foto() {}
 
     public Integer getId() {

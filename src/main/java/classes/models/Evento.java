@@ -41,6 +41,22 @@ public class Evento {
     @ManyToMany(mappedBy = "eventiRecensiti")
     private List<Utente> utentiRecensione = new ArrayList<>();
 
+    public Evento(Integer idEvento, String nome, String descrizione, LocalDateTime dataOra,
+                  List<CategoriaEnum> categorieEvento, RegioneEnum luogoEvento, List<Foto> fotoEvento, boolean privato,
+                  String indirizzo, Integer postiTotali, Utente utenteOrganizzatore) {
+        this.idEvento = idEvento;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.dataOra = dataOra;
+        this.categorieEvento = categorieEvento;
+        this.luogoEvento = luogoEvento;
+        this.fotoEvento = fotoEvento;
+        this.privato = privato;
+        this.indirizzo = indirizzo;
+        this.postiTotali = postiTotali;
+        this.utenteOrganizzatore = utenteOrganizzatore;
+    }
+
     public Evento(){}
 
     public LocalDateTime getDataOra() {
