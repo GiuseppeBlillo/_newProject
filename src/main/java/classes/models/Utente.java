@@ -39,14 +39,7 @@ public class Utente {
     private List<Evento>eventiRecensiti = new ArrayList<>();
 
 
-    public Utente(Integer idUtente, String nomeUtente, String cognomeUtente, Integer etaUtente, String indirizzoMailUtente, String urlFotoUtente) {
-        this.idUtente = idUtente;
-        this.nomeUtente = nomeUtente;
-        this.cognomeUtente = cognomeUtente;
-        this.etaUtente = etaUtente;
-        this.indirizzoMailUtente = indirizzoMailUtente;
-        this.urlFotoUtente = urlFotoUtente;
-    }
+    public Utente(){}
 
     public Integer getIdUtente() {
         return idUtente;

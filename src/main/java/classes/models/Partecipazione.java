@@ -13,11 +13,7 @@ public class Partecipazione {
     @Column(nullable = false)
     private Evento idEvento;
 
-    public Partecipazione(Integer idPartecipazione, Utente idUtente, Evento idEvento) {
-        this.idPartecipazione = idPartecipazione;
-        this.idUtente = idUtente;
-        this.idEvento = idEvento;
-    }
+    public Partecipazione() {}
 
     public Integer getIdPartecipazione() {
         return idPartecipazione;
