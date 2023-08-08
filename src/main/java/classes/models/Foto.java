@@ -1,5 +1,6 @@
 package classes.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class Foto {
     private Integer id;
     @Column(nullable = false, unique = true)
     private String url;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="idRecensione", nullable = false)
     private Recensione recensione;

@@ -20,7 +20,7 @@ public class Recensione {
     private Integer rating;
     @Column
     private List<Foto> foto;
-    @OneToMany(mappedBy = "recensione")
+    @OneToMany(mappedBy = "recensione", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Foto> fotos= new ArrayList<>();
 
     public Recensione(Integer idRecensione, Utente idUtente, Evento idEvento, String campoTestuale,
