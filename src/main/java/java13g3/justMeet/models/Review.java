@@ -8,7 +8,6 @@ import java.util.List;
 public class Review {
     Long id;
     String fieldText;
-
     List<Blob> photos;
     RatingEnum rating;
 

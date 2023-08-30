@@ -1,6 +1,7 @@
 package java13g3.justMeet.models;
 
 import java13g3.justMeet.enumerations.CategoryEnum;
+import java13g3.justMeet.enumerations.LanguageEnum;
 
 import java.sql.Blob;
 import java.sql.Time;
@@ -10,6 +11,7 @@ public class Event {
     String name;
     String description;
     CategoryEnum category;
+    LanguageEnum language;
     Blob coverPhoto;
     Time eventDate;
     String eventApi;
@@ -71,6 +73,14 @@ public class Event {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public LanguageEnum getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(LanguageEnum language) {
+        this.language = language;
     }
 
     public Blob getCoverPhoto() {
