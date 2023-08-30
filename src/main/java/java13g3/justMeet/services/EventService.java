@@ -25,12 +25,16 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Event updateEvent(Event e){
-        eventRepository.deleteById(e.getId());
+    public Event retrieveEventById(Long id){
+        return eventRepository.getReferenceById(id);
+    }
+
+    public Event updateEvent(Long id,Event e){
+        eventRepository.deleteById(id);
         return eventRepository.save(e);
     }
 
-    public void deleteEvent(Event e){
-        eventRepository.delete(e);
+    public void deleteEventById(Long id){
+        eventRepository.deleteById(id);
     }
 }
