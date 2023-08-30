@@ -26,13 +26,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public User updateUser(User u){
         userRepository.deleteById(u.getId());
         return userRepository.save(u);
     }
 
-    public void deleteUser(User u){
-        userRepository.delete(u);
+    public void deleteUserById(Long id){
+        userRepository.deleteById(id);
     }
 
 }
