@@ -1,5 +1,6 @@
 package java13g3.justMeet.services;
 
+import java13g3.justMeet.enumerations.RatingEnum;
 import java13g3.justMeet.models.Review;
 import java13g3.justMeet.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +16,27 @@ public class ReviewService {
     ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
-    public Review createNew(Review r){
+    public void createReview(Review r){
         if (r != null){
-            return reviewRepository.save(r);
-        } return null;
+            reviewRepository.save(r);
+        }
+    }
+    public Review getReviewById(Long reviewId){
+        return reviewRepository.findById(reviewId).orElse(null);
+    }
+    public List<Review> getReviewByRating(RatingEnum stars){
+        return reviewRepository.findByRating(stars);
     }
 
-    public List<Review> findallReviews(){
+    public List<Review> getAllReviews(){
         return reviewRepository.findAll();
     }
 
-    public Review updateReview(Review r){
+    public void updateReview(Review r){
         reviewRepository.deleteById(r.getId());
-        return reviewRepository.save(r);
+        reviewRepository.save(r);
     }
-
-    public void deleteReview(Review r){
-        reviewRepository.delete(r);
+    public void deleteReview(Long id){
+        reviewRepository.deleteById(id);
     }
 }
