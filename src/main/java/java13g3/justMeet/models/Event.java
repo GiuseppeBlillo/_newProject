@@ -28,16 +28,17 @@ public class Event {
     private String eventApi;
     @Column(name = "ADDRESS_API")
     private String addressApi;
-    @Column(name = "ISPRIVATE", nullable = false)
+    @Column(name = "ISPRIVATE")
     private Boolean isPrivate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_USER")
     private User userId;
 
+     */
 
-    public Event(Long id, String name, String description, CategoryEnum category, LanguageEnum language,
+
+    public Event(String name, String description, CategoryEnum category, LanguageEnum language,
                  Blob coverPhoto, Time eventDate, String eventApi, String addressApi, Boolean isPrivate, User userId) {
-        this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
@@ -47,15 +48,18 @@ public class Event {
         this.eventApi = eventApi;
         this.addressApi = addressApi;
         this.isPrivate = isPrivate;
-        this.userId = userId;
+       // this.userId = userId;
     }
 
-    public Event(Long id, String name, Boolean isPrivate) {
-        this.id = id;
+    public Event(String name, Boolean isPrivate) {
         this.name = name;
         this.isPrivate = isPrivate;
     }
     public Event() {
+    }
+
+    public Event(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -138,11 +142,13 @@ public class Event {
         isPrivate = aPrivate;
     }
 
-    public User getUserId() {
+    /*public User getUserId() {
         return userId;
     }
 
     public void setUserId(User userId) {
         this.userId = userId;
     }
+
+     */
 }

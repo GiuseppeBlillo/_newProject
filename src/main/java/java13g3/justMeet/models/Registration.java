@@ -1,4 +1,4 @@
-package java13g3.justMeet.models;
+/*package java13g3.justMeet.models;
 
 import jakarta.persistence.*;
 
@@ -50,3 +50,5 @@ public class Registration {
         this.eventId = eventId;
     }
 }
+
+ */

@@ -16,24 +16,17 @@ public class Review {
     private String text;
     @Column(name = "PHOTOS")
     private List<Blob> photos;
-    @Column(name = "RATING", nullable = false)
+    @Column(name = "RATING")
     private RatingEnum rating;
-    @OneToOne
-    @JoinColumn(name = "REGISTRATION_ID", nullable = false)
-    private Registration registrationId;
 
-    public Review(Long id, String text, List<Blob> photos, RatingEnum rating) {
-        this.id = id;
+
+    public Review(String text, RatingEnum rating) {
         this.text = text;
-        this.photos = photos;
         this.rating = rating;
     }
-
-    public Review(RatingEnum rating, Registration registrationId) {
-        this.rating = rating;
-        this.registrationId = registrationId;
+    public Review(String text) {
+        this.text = text;
     }
-
     public Review() {
     }
 
@@ -77,11 +70,5 @@ public class Review {
         this.text = text;
     }
 
-    public Registration getRegistrationId() {
-        return registrationId;
-    }
 
-    public void setRegistrationId(Registration registrationId) {
-        this.registrationId = registrationId;
-    }
 }

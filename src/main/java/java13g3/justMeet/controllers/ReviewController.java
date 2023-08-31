@@ -21,10 +21,8 @@ class ReviewController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createReview(@RequestBody Review review){
-        if (review != null){
             reviewService.createReview(review);
             return ResponseEntity.ok("Review created!");
-        } else return ResponseEntity.badRequest().body("Review cannot be created!");
     }
 
     @GetMapping("/retrieve")
@@ -35,7 +33,7 @@ class ReviewController {
             return ResponseEntity.badRequest().build();        }
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/retrieve/{id}")
     public ResponseEntity<Review> getReviewById(@PathVariable("id") Long reviewId){
         if (reviewService.getReviewById(reviewId) != null){
             return ResponseEntity.ok(reviewService.getReviewById(reviewId));
@@ -50,7 +48,7 @@ class ReviewController {
             return ResponseEntity.badRequest().build();        }
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
         try{
             reviewService.updateReview(id, r);

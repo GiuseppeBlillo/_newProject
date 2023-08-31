@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class EventService {
-    EventRepository eventRepository;
+    private EventRepository eventRepository;
 
     @Autowired
     EventService(EventRepository eventRepository) {
@@ -29,7 +29,7 @@ public class EventService {
     }
 
     public Event retrieveEventById(Long id) {
-        return eventRepository.getReferenceById(id);
+        return eventRepository.findById(id).orElse(null);
     }
 
     public List<Event> retrieveEventByName(String eventName) {

@@ -17,7 +17,7 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
     public void createReview(Review r){
-        if (r != null){
+        if(r!=null) {
             reviewRepository.save(r);
         }
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     UserService(UserRepository userRepository) {
@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public User retrieveUserById(Long userId){
-        return userRepository.getReferenceById(userId);
+        return userRepository.findById(userId).orElse(null);
     }
 
 
