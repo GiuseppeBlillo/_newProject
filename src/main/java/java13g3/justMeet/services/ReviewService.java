@@ -32,8 +32,8 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public void updateReview(Review r){
-        reviewRepository.deleteById(r.getId());
+    public void updateReview(Long id,Review r){
+        reviewRepository.deleteById(id);
         reviewRepository.save(r);
     }
     public void deleteReview(Long id){

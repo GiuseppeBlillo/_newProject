@@ -1,6 +1,5 @@
 package java13g3.justMeet.services;
 
-import java13g3.justMeet.enumerations.CategoryEnum;
 import java13g3.justMeet.enumerations.LanguageEnum;
 import java13g3.justMeet.models.Event;
 import java13g3.justMeet.repositories.EventRepository;
@@ -52,7 +51,6 @@ public class EventService {
     public List<Event> retrieveEventByLanguage(LanguageEnum languageEnum) {
         return eventRepository.findByLanguage(languageEnum);
     }
-
 
     public void updateEvent(Long id, Event e) {
         eventRepository.deleteById(id);

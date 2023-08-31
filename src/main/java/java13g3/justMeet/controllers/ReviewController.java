@@ -52,9 +52,9 @@ class ReviewController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateReview(@RequestBody Review review){
+    public ResponseEntity<String> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
         try{
-            reviewService.updateReview(review);
+            reviewService.updateReview(id, r);
             return ResponseEntity.ok("Recensione aggiornata!");
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body("Impossibile aggiornare la recensione!");

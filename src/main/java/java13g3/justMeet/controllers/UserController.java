@@ -1,5 +1,6 @@
 package java13g3.justMeet.controllers;
 
+
 import java13g3.justMeet.models.User;
 import java13g3.justMeet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateUserById( @RequestBody User updatedUser) {
-        userService.updateUser(updatedUser);
+    public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @RequestBody User u) {
+        userService.updateUser(id, u);
         return ResponseEntity.ok("Utente aggiornato");
     }
 
