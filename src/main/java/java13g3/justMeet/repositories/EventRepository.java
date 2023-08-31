@@ -1,6 +1,5 @@
 package java13g3.justMeet.repositories;
 
-import java13g3.justMeet.enumerations.CategoryEnum;
 import java13g3.justMeet.enumerations.LanguageEnum;
 import java13g3.justMeet.models.Event;
 import org.springframework.data.jpa.repository.JpaRepository;

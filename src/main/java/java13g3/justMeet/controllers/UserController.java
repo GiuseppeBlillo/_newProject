@@ -1,6 +1,5 @@
 package java13g3.justMeet.controllers;
 
-
 import java13g3.justMeet.models.User;
 import java13g3.justMeet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
