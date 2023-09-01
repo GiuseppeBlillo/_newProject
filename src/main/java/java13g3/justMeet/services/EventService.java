@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -51,10 +52,16 @@ public class EventService {
     public List<Event> retrieveEventByLanguage(LanguageEnum languageEnum) {
         return eventRepository.findByLanguage(languageEnum);
     }
-
-    public void updateEvent(Long id, Event e) {
-        eventRepository.deleteById(id);
-        eventRepository.save(e);
+// TODO
+    public Optional<Event> updateEvent(Long id, Event currentEvent) {
+        Optional<Event> updateEvent = eventRepository.findById(id);
+        if (updateEvent.isPresent()){
+            updateEvent.get().setName(currentEvent.getName());
+            eventRepository.save(updateEvent.get());
+        return updateEvent;
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void deleteEventById(Long id) {
