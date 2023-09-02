@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
@@ -32,9 +33,16 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public void updateReview(Long id,Review r){
-        reviewRepository.deleteById(id);
-        reviewRepository.save(r);
+    public Optional<Review> updateReview(Long id,Review actualReview){
+        Optional<Review> updateReview = reviewRepository.findById(id);
+        if(updateReview.isPresent()){
+            updateReview.get().setText(actualReview.getText());
+            updateReview.get().setRating(actualReview.getRating());
+            reviewRepository.save(updateReview.get());
+            return updateReview;
+        }else {
+            return Optional.empty();
+        }
     }
     public void deleteReview(Long id){
         reviewRepository.deleteById(id);

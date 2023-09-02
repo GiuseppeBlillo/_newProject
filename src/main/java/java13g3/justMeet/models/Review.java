@@ -15,7 +15,7 @@ public class Review {
     @Column(name = "TEXT")
     private String text;
     @Column(name = "PHOTOS")
-    private List<Blob> photos;
+    private List<String> photos;
     @Column(name = "RATING")
     private RatingEnum rating;
 
@@ -24,9 +24,7 @@ public class Review {
         this.text = text;
         this.rating = rating;
     }
-    public Review(String text) {
-        this.text = text;
-    }
+
     public Review() {
     }
 
@@ -46,11 +44,11 @@ public class Review {
         this.text = fieldText;
     }
 
-    public List<Blob> getPhotos() {
+    public List<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Blob> photos) {
+    public void setPhotos(List<String> photos) {
         this.photos = photos;
     }
 

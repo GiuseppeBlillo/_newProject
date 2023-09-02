@@ -15,7 +15,7 @@ public class User {
     @Column(name = "SURNAME")
     String surname;
     @Column(name = "PROFILE_PICTURE")
-    Blob photoProfile;
+    String photoProfile;
     @Column(name = "NICKNAME", nullable = false)
     String nickname;
     @Column(name = "AGE")
@@ -23,21 +23,14 @@ public class User {
     @Column(name = "EMAIL", nullable = false)
     String email;
     @Column(name = "PHONE_NUMBER", nullable = false)
-    Integer phoneNumber;
+    Long phoneNumber;
 
-    public User(Long id, String name, String surname, Blob photoProfile, String nickname, Integer age, String email, Integer phoneNumber) {
-        this.id = id;
+    public User(String name, String surname, String photoProfile, String nickname, Integer age, String email, Long phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.photoProfile = photoProfile;
         this.nickname = nickname;
         this.age = age;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public User(String nickname, String email, Integer phoneNumber) {
-        this.nickname = nickname;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -69,11 +62,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Blob getPhotoProfile() {
+    public String getPhotoProfile() {
         return photoProfile;
     }
 
-    public void setPhotoProfile(Blob photoProfile) {
+    public void setPhotoProfile(String photoProfile) {
         this.photoProfile = photoProfile;
     }
 
@@ -101,11 +94,11 @@ public class User {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

@@ -21,7 +21,7 @@ public class Event {
     @Column(name = "LANGUAGE")
     private LanguageEnum language;
     @Column(name = "PHOTO")
-    private Blob coverPhoto;
+    private String coverPhoto;
     @Column(name = "DATE")
     private Time eventDate;
     @Column(name = "EVENT_API")
@@ -38,7 +38,7 @@ public class Event {
 
 
     public Event(String name, String description, CategoryEnum category, LanguageEnum language,
-                 Blob coverPhoto, Time eventDate, String eventApi, String addressApi, Boolean isPrivate, User userId) {
+                 String coverPhoto, Time eventDate, String eventApi, String addressApi, Boolean isPrivate, User userId) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -48,13 +48,8 @@ public class Event {
         this.eventApi = eventApi;
         this.addressApi = addressApi;
         this.isPrivate = isPrivate;
-       // this.userId = userId;
     }
 
-    public Event(String name, Boolean isPrivate) {
-        this.name = name;
-        this.isPrivate = isPrivate;
-    }
     public Event() {
     }
 
@@ -102,11 +97,11 @@ public class Event {
         this.language = language;
     }
 
-    public Blob getCoverPhoto() {
+    public String getCoverPhoto() {
         return coverPhoto;
     }
 
-    public void setCoverPhoto(Blob coverPhoto) {
+    public void setCoverPhoto(String coverPhoto) {
         this.coverPhoto = coverPhoto;
     }
 

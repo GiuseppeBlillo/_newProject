@@ -21,6 +21,7 @@ public class EventService {
 
     public void createEvent(Event e) {
         if (e != null) {
+            
             eventRepository.save(e);
         }
     }
@@ -57,8 +58,16 @@ public class EventService {
         Optional<Event> updateEvent = eventRepository.findById(id);
         if (updateEvent.isPresent()){
             updateEvent.get().setName(currentEvent.getName());
+            updateEvent.get().setDescription(currentEvent.getDescription());
+            updateEvent.get().setCategory(currentEvent.getCategory());
+            updateEvent.get().setLanguage(currentEvent.getLanguage());
+            updateEvent.get().setCoverPhoto(currentEvent.getCoverPhoto());
+            updateEvent.get().setEventDate(currentEvent.getEventDate());
+            updateEvent.get().setEventApi(currentEvent.getEventApi());
+            updateEvent.get().setAddressApi(currentEvent.getAddressApi());
+            updateEvent.get().setPrivate(currentEvent.getPrivate());
             eventRepository.save(updateEvent.get());
-        return updateEvent;
+            return updateEvent;
         } else {
             return Optional.empty();
         }
