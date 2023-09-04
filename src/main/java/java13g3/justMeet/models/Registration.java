@@ -12,7 +12,7 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToMany
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "REGISTRATION_ID")
     private List<User> userList;
     @ManyToOne
     @JoinColumn(name = "EVENT_ID")
@@ -20,8 +20,7 @@ public class Registration {
     @Column(name = "PARTECIPATION_DATE")
     private LocalDateTime dateTime;
 
-    public Registration(Long id, List<User> userList, Event eventId, LocalDateTime dateTime) {
-        this.id = id;
+    public Registration(List<User> userList, Event eventId, LocalDateTime dateTime) {
         this.userList = userList;
         this.eventId = eventId;
         this.dateTime = dateTime;

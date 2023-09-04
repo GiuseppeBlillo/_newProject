@@ -3,7 +3,6 @@ package java13g3.justMeet.models;
 import jakarta.persistence.*;
 import java13g3.justMeet.enumerations.RatingEnum;
 
-import java.sql.Blob;
 import java.util.List;
 
 @Entity
@@ -14,13 +13,19 @@ public class Review {
     private Long id;
     @Column(name = "TEXT")
     private String text;
-    @Column(name = "PHOTOS")
-    private List<String> photos;
+    @Column(name = "PHOTO")
+    private String photo;
     @Column(name = "RATING")
     private RatingEnum rating;
-    public Review(String text, RatingEnum rating) {
+    @OneToOne
+    @JoinColumn(name = "REGISTRATION_ID")
+    private Registration registrationId;
+
+    public Review(String text, String photo, RatingEnum rating, Registration registrationId) {
         this.text = text;
+        this.photo = photo;
         this.rating = rating;
+        this.registrationId = registrationId;
     }
 
     public Review() {
@@ -42,12 +47,12 @@ public class Review {
         this.text = fieldText;
     }
 
-    public List<String> getPhotos() {
-        return photos;
+    public String getPhotos() {
+        return photo;
     }
 
-    public void setPhotos(List<String> photos) {
-        this.photos = photos;
+    public void setPhotos(String photo) {
+        this.photo = photo;
     }
 
     public RatingEnum getRating() {
@@ -66,5 +71,11 @@ public class Review {
         this.text = text;
     }
 
+    public Registration getRegistrationId() {
+        return registrationId;
+    }
 
+    public void setRegistrationId(Registration registrationId) {
+        this.registrationId = registrationId;
+    }
 }

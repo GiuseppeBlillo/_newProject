@@ -1,11 +1,14 @@
 package java13g3.justMeet.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java13g3.justMeet.enumerations.CategoryEnum;
 import java13g3.justMeet.enumerations.LanguageEnum;
 
-import java.sql.Blob;
 import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Table(name = "EVENT")
 public class Event {
@@ -21,24 +24,22 @@ public class Event {
     @Column(name = "LANGUAGE")
     private LanguageEnum language;
     @Column(name = "PHOTO")
-    private Blob coverPhoto;
+    private String coverPhoto;
     @Column(name = "DATE")
-    private Time eventDate;
+    @JsonFormat(pattern = "HH:mm:ss dd-MM-yyyy")
+    private LocalDateTime eventDate;
     @Column(name = "EVENT_API")
     private String eventApi;
     @Column(name = "ADDRESS_API")
     private String addressApi;
     @Column(name = "ISPRIVATE")
     private Boolean isPrivate;
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_USER")
-    private User userId;
-
-     */
-
+    @OneToMany
+    @JoinColumn(name = "EVENT_ID")
+    private List<User> userId;
 
     public Event(String name, String description, CategoryEnum category, LanguageEnum language,
-                 Blob coverPhoto, Time eventDate, String eventApi, String addressApi, Boolean isPrivate, User userId) {
+                 String coverPhoto, LocalDateTime eventDate, String eventApi, String addressApi, Boolean isPrivate, List<User> userId) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -48,7 +49,7 @@ public class Event {
         this.eventApi = eventApi;
         this.addressApi = addressApi;
         this.isPrivate = isPrivate;
-       // this.userId = userId;
+        this.userId = userId;
     }
 
     public Event(String name, Boolean isPrivate) {
@@ -102,19 +103,19 @@ public class Event {
         this.language = language;
     }
 
-    public Blob getCoverPhoto() {
+    public String getCoverPhoto() {
         return coverPhoto;
     }
 
-    public void setCoverPhoto(Blob coverPhoto) {
+    public void setCoverPhoto(String coverPhoto) {
         this.coverPhoto = coverPhoto;
     }
 
-    public Time getEventDate() {
+    public LocalDateTime getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Time eventDate) {
+    public void setEventDate(LocalDateTime eventDate) {
         this.eventDate = eventDate;
     }
 
@@ -142,13 +143,12 @@ public class Event {
         isPrivate = aPrivate;
     }
 
-    /*public User getUserId() {
+    public List<User> getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(List<User> userId) {
         this.userId = userId;
     }
 
-     */
 }

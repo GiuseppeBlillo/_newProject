@@ -36,7 +36,7 @@ public class ReviewService {
     public Optional<Review> updateReview(Long id, Review currentReview) {
         Optional<Review> updateReview = reviewRepository.findById(id);
         if (updateReview.isPresent()){
-            updateReview.get().setFieldText(currentReview.getFieldText());
+            updateReview.get().setText(currentReview.getText());
             updateReview.get().setPhotos(currentReview.getPhotos());
             updateReview.get().setRating(currentReview.getRating());
             reviewRepository.save(updateReview.get());

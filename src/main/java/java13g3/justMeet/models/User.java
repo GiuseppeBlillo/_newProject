@@ -2,8 +2,6 @@ package java13g3.justMeet.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Blob;
-
 @Entity
 @Table(name = "USER")
 public class User {
@@ -15,7 +13,7 @@ public class User {
     @Column(name = "SURNAME")
     String surname;
     @Column(name = "PROFILE_PICTURE")
-    Blob photoProfile;
+    String photoProfile;
     @Column(name = "NICKNAME", nullable = false)
     String nickname;
     @Column(name = "AGE")
@@ -25,7 +23,7 @@ public class User {
     @Column(name = "PHONE_NUMBER", nullable = false)
     String phoneNumber;
 
-    public User(Long id, String name, String surname, Blob photoProfile, String nickname, Integer age, String email, String phoneNumber) {
+    public User(Long id, String name, String surname, String photoProfile, String nickname, Integer age, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -62,11 +60,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Blob getPhotoProfile() {
+    public String getPhotoProfile() {
         return photoProfile;
     }
 
-    public void setPhotoProfile(Blob photoProfile) {
+    public void setPhotoProfile(String photoProfile) {
         this.photoProfile = photoProfile;
     }
 

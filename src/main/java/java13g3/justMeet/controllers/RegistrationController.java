@@ -39,7 +39,7 @@ class RegistrationController {
     public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp){
         Optional<Registration> tempReg = registrationService.updateRegistration(id,registrationUp);
         if (tempReg.isPresent()) {
-            return ResponseEntity.ok("Update della recensione effettuato con succeso!");
+            return ResponseEntity.ok("Update della recensione effettuato con successo!");
         } else {
             return ResponseEntity.notFound().build();
         }
