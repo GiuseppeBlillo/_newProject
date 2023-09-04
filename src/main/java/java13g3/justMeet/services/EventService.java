@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class EventService {
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     @Autowired
     EventService(EventRepository eventRepository) {
@@ -24,15 +24,12 @@ public class EventService {
             eventRepository.save(e);
         }
     }
-
     public List<Event> retrieveAllEvents() {
         return eventRepository.findAll();
     }
-
     public Event retrieveEventById(Long id) {
         return eventRepository.findById(id).orElse(null);
     }
-
     public List<Event> retrieveEventByName(String eventName) {
         return eventRepository.findByName(eventName);
     }
@@ -48,11 +45,9 @@ public class EventService {
     public List<Event> retrieveEventByAddressApi(String addressApi) {
         return eventRepository.findByAddressApi(addressApi);
     }
-
     public List<Event> retrieveEventByLanguage(LanguageEnum languageEnum) {
         return eventRepository.findByLanguage(languageEnum);
     }
-// TODO
     public Optional<Event> updateEvent(Long id, Event currentEvent) {
         Optional<Event> updateEvent = eventRepository.findById(id);
         if (updateEvent.isPresent()){
@@ -63,7 +58,6 @@ public class EventService {
             return Optional.empty();
         }
     }
-
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);
     }

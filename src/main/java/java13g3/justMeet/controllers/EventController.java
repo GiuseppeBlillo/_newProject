@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/event")
@@ -64,8 +65,12 @@ public class EventController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateEventById(@PathVariable("id") Long id, @RequestBody Event e) {
-        eventService.updateEvent(id, e);
-        return ResponseEntity.ok("Rinnovato evento");
+        Optional<Event> updateEvent = eventService.updateEvent(id,e);
+        if (updateEvent.isPresent()){
+            return ResponseEntity.ok("Update dell'evento effettuato con successo!");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/delete/{id}")
