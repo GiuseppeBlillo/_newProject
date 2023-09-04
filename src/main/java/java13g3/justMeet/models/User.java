@@ -23,9 +23,9 @@ public class User {
     @Column(name = "EMAIL", nullable = false)
     String email;
     @Column(name = "PHONE_NUMBER", nullable = false)
-    Integer phoneNumber;
+    String phoneNumber;
 
-    public User(Long id, String name, String surname, Blob photoProfile, String nickname, Integer age, String email, Integer phoneNumber) {
+    public User(Long id, String name, String surname, Blob photoProfile, String nickname, Integer age, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -35,13 +35,6 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
-
-    public User(String nickname, String email, Integer phoneNumber) {
-        this.nickname = nickname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
-
     public User() {
     }
 
@@ -101,11 +94,11 @@ public class User {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

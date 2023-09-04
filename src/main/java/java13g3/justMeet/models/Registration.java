@@ -1,7 +1,8 @@
-/*package java13g3.justMeet.models;
+package java13g3.justMeet.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,11 +17,14 @@ public class Registration {
     @ManyToOne
     @JoinColumn(name = "EVENT_ID")
     private Event eventId;
+    @Column(name = "PARTECIPATION_DATE")
+    private LocalDateTime dateTime;
 
-    public Registration(Long id, List<User> userList, Event eventId) {
+    public Registration(Long id, List<User> userList, Event eventId, LocalDateTime dateTime) {
         this.id = id;
         this.userList = userList;
         this.eventId = eventId;
+        this.dateTime = dateTime;
     }
 
     public Registration() {
@@ -49,6 +53,14 @@ public class Registration {
     public void setEventId(Event eventId) {
         this.eventId = eventId;
     }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 }
 
- */
+
