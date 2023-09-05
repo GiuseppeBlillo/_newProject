@@ -3,8 +3,6 @@ package java13g3.justMeet.models;
 import jakarta.persistence.*;
 import java13g3.justMeet.enumerations.RatingEnum;
 
-import java.util.List;
-
 @Entity
 @Table(name = "REVIEW")
 public class Review {
@@ -27,7 +25,6 @@ public class Review {
         this.rating = rating;
         this.registrationId = registrationId;
     }
-
     public Review() {
     }
 
