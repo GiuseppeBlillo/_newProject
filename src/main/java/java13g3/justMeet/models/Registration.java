@@ -1,5 +1,6 @@
 package java13g3.justMeet.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Registration {
     @JoinColumn(name = "EVENT_ID")
     private Event eventId;
     @Column(name = "PARTECIPATION_DATE")
+    @JsonFormat(pattern = "HH:mm:ss dd-MM-yyyy")
     private LocalDateTime dateTime;
 
     public Registration(List<User> userList, Event eventId, LocalDateTime dateTime) {
