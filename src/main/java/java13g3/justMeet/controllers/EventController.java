@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/event")
@@ -33,33 +34,57 @@ public class EventController {
     }
 
     @GetMapping("/retrieve/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(eventService.retrieveEventById(id));
+    public ResponseEntity<Optional<Event>> getEventById(@PathVariable("id") Long id) {
+        if(eventService.retrieveEventById(id).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventById(id));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<Event>> getEventsByName(@PathVariable("name") String name) {
-        return ResponseEntity.ok(eventService.retrieveEventByName(name));
+    public ResponseEntity<Optional<Event>> getEventsByName(@PathVariable("name") String name) {
+        if(eventService.retrieveEventByName(name).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventByName(name));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/category/{name}")
-    public ResponseEntity<List<Event>> getEventsByCategory(@PathVariable("name") String category) {
-        return ResponseEntity.ok(eventService.retrieveEventByCategory(category));
+    public ResponseEntity<Optional<Event>> getEventsByCategory(@PathVariable("name") String category) {
+        if(eventService.retrieveEventByCategory(category).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventByCategory(category));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<Event>> getEventsByDate(@PathVariable("date") Date date) {
-        return ResponseEntity.ok(eventService.retrieveEventByEventDate(date));
+    public ResponseEntity<Optional<Event>> getEventsByDate(@PathVariable("date") Date date) {
+        if(eventService.retrieveEventByEventDate(date).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventByEventDate(date));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/addressApi/{address}")
-    public ResponseEntity<List<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
-        return ResponseEntity.ok(eventService.retrieveEventByAddressApi(address));
+    public ResponseEntity<Optional<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
+        if(eventService.retrieveEventByAddressApi(address).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventByAddressApi(address));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/language/{id}")
-    public ResponseEntity<List<Event>> getEventsByLanguage(@PathVariable("id") LanguageEnum language) {
-        return ResponseEntity.ok(eventService.retrieveEventByLanguage(language));
+    public ResponseEntity<Optional<Event>> getEventsByLanguage(@PathVariable("id") LanguageEnum language) {
+        if(eventService.retrieveEventByLanguage(language).isPresent()){
+            return ResponseEntity.ok(eventService.retrieveEventByLanguage(language));
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/update/{id}")
@@ -73,8 +98,6 @@ public class EventController {
         eventService.deleteEventById(id);
         return ResponseEntity.ok("L'evento è stato cancellato");
     }
-
-
 }
 
 

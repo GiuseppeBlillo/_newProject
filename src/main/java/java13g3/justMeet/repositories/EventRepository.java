@@ -5,12 +5,12 @@ import java13g3.justMeet.models.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    List<Event> findByName(String name);
-    List<Event> findByCategory(String category);
-    List<Event> findByEventDate(Date date);
-    List<Event> findByAddressApi(String addressApi);
-    List<Event> findByLanguage(LanguageEnum language);
+    Optional<Event> findByName(String name);
+    Optional<Event> findByCategory(String category);
+    Optional<Event> findByEventDate(Date date);
+    Optional<Event> findByAddressApi(String addressApi);
+    Optional<Event> findByLanguage(LanguageEnum language);
 }
