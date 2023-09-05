@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class EventService {
-    private final EventRepository eventRepository;
+    private EventRepository eventRepository;
 
     @Autowired
     EventService(EventRepository eventRepository) {
@@ -25,30 +25,58 @@ public class EventService {
             eventRepository.save(e);
         }
     }
+
     public List<Event> retrieveAllEvents() {
         return eventRepository.findAll();
     }
-    public Event retrieveEventById(Long id) {
-        return eventRepository.findById(id).orElse(null);
+
+    public Optional<Event> retrieveEventById(Long id) {
+        if (eventRepository.findById(id).isPresent()) {
+            return eventRepository.findById(id);
+        } else {
+            return Optional.empty();
+        }
     }
-    public List<Event> retrieveEventByName(String eventName) {
-        return eventRepository.findByName(eventName);
+    public Optional<Event> retrieveEventByName(String eventName) {
+        if (eventRepository.findByName(eventName).isPresent()) {
+            return eventRepository.findByName(eventName);
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public List<Event> retrieveEventByCategory(String category) {
-        return eventRepository.findByCategory(category);
+    public Optional<Event> retrieveEventByCategory(String category) {
+        if (eventRepository.findByCategory(category).isPresent()) {
+            return eventRepository.findByCategory(category);
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public List<Event> retrieveEventByEventDate(Date date) {
-        return eventRepository.findByEventDate(date);
+    public Optional<Event> retrieveEventByEventDate(Date date) {
+        if (eventRepository.findByEventDate(date).isPresent()) {
+            return eventRepository.findByEventDate(date);
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public List<Event> retrieveEventByAddressApi(String addressApi) {
-        return eventRepository.findByAddressApi(addressApi);
+    public Optional<Event> retrieveEventByAddressApi(String addressApi) {
+        if (eventRepository.findByAddressApi(addressApi).isPresent()) {
+            return eventRepository.findByAddressApi(addressApi);
+        } else {
+            return Optional.empty();
+        }
     }
-    public List<Event> retrieveEventByLanguage(LanguageEnum languageEnum) {
-        return eventRepository.findByLanguage(languageEnum);
+
+    public Optional<Event> retrieveEventByLanguage(LanguageEnum languageEnum) {
+        if (eventRepository.findByLanguage(languageEnum).isPresent()) {
+            return eventRepository.findByLanguage(languageEnum);
+        } else {
+            return Optional.empty();
+        }
     }
+
     public Optional<Event> updateEvent(Long id, Event currentEvent) {
         Optional<Event> updateEvent = eventRepository.findById(id);
         if (updateEvent.isPresent()){
@@ -67,7 +95,8 @@ public class EventService {
             return Optional.empty();
         }
     }
+
     public void deleteEventById(Long id) {
-        eventRepository.deleteById(id);
+       eventRepository.deleteById(id);
     }
 }
