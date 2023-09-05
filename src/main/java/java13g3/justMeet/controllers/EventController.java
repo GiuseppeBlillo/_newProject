@@ -29,8 +29,11 @@ public class EventController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Event>> getAllEvent() {
-        return ResponseEntity.ok(
-                eventService.retrieveAllEvents());
+        if( eventService.retrieveAllEvents().size() >=1){
+            return ResponseEntity.ok(eventService.retrieveAllEvents());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/retrieve/{id}")
