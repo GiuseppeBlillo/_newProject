@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java13g3.justMeet.enumerations.CategoryEnum;
 import java13g3.justMeet.enumerations.LanguageEnum;
 
+import java.sql.Blob;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -151,4 +152,5 @@ public class Event {
         this.userId = userId;
     }
 
+     */
 }
