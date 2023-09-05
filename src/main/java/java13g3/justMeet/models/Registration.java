@@ -30,7 +30,6 @@ public class Registration {
 
     public Registration() {
     }
-
     public Long getId() {
         return id;
     }
