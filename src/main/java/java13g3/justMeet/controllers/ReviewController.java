@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/review")
@@ -21,31 +22,37 @@ class ReviewController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createReview(@RequestBody Review review){
+        try {
             reviewService.createReview(review);
-            return ResponseEntity.ok("Review created!");
+            return ResponseEntity.ok("Recensione creata!");
+        }catch (Exception e){
+            return (ResponseEntity<String>) ResponseEntity.badRequest().body("Recensione non compilata correttamente!");
+        }
     }
 
     @GetMapping("/retrieve")
-    public ResponseEntity<List<Review>> reviewList(){
+    public ResponseEntity<Optional<List<Review>>> reviewList(){
         try{
             return ResponseEntity.ok(reviewService.getAllReviews());
         } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();        }
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/retrieve/{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable("id") Long reviewId){
-        if (reviewService.getReviewById(reviewId) != null){
+    public ResponseEntity<Optional<Review>> getReviewById(@PathVariable("id") Long reviewId){
+        if (reviewService.getReviewById(reviewId).isPresent()){
             return ResponseEntity.ok(reviewService.getReviewById(reviewId));
         } else return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/rating/{rating}")
-    public ResponseEntity<List<Review>> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars){
+    public ResponseEntity<Optional<List<Review>>> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars){
         try{
             return ResponseEntity.ok(reviewService.getReviewByRating(stars));
         } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();        }
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/update/{id}")
@@ -63,7 +70,7 @@ class ReviewController {
         try{
             reviewService.deleteReview(id);
             return ResponseEntity.ok("Recensione cancellata!");
-        } catch (IllegalArgumentException e){
+        } catch (Exception e){
             return ResponseEntity.badRequest().body("Impossibile cancellare la recensione!");
         }
     }
