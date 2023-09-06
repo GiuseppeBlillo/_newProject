@@ -120,14 +120,14 @@ public class UserService {
             oldUser.setPhoneNumber(modifiedUser.getPhoneNumber());
             userRepository.save(oldUser);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Non trovato l'utente con id " + id );
         }
     }
 
     public void deleteUserById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
-        } else throw new IllegalArgumentException();
+        } else throw new IllegalArgumentException("Non trovato l'utente con l'id ");
     }
 
 }

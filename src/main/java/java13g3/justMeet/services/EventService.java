@@ -23,7 +23,7 @@ public class EventService {
         if (e.getName().isEmpty() || e.getDescription().isEmpty() || e.getCategory().toString().isEmpty()  ||
             e.getLanguage().toString().isEmpty()  || e.getCoverPhoto().isEmpty() || e.getEventDate().toString().isEmpty() ||
             e.getEventApi().isEmpty() || e.getAddressApi().isEmpty() || e.getPrivate().toString().isEmpty() || e.getUserId().isEmpty()){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Non hai completato tutti i campi");
         }else {
             eventRepository.save(e);
         }
@@ -33,7 +33,7 @@ public class EventService {
         if(eventRepository.findAll().size() >= 1){
             return eventRepository.findAll();
         }else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Non sono stati trovati eventi");
         }
     }
 
@@ -99,7 +99,7 @@ public class EventService {
             eventRepository.save(updateEvent.get());
             return updateEvent;
         } else {
-            return Optional.empty();
+            throw new IllegalArgumentException("Evento non trovato con l' id ");
         }
     }
 
@@ -107,7 +107,7 @@ public class EventService {
         if(eventRepository.findById(id).isPresent()) {
             eventRepository.deleteById(id);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Evento non trovato con l' id ");
         }
     }
 }

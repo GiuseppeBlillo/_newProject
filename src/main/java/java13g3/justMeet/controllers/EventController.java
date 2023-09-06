@@ -102,8 +102,11 @@ public class EventController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEventById(@PathVariable("id") Long id) {
-        eventService.deleteEventById(id);
-        return ResponseEntity.ok("L'evento è stato cancellato");
+        if(eventService.retrieveEventById(id).isPresent()){
+           eventService.deleteEventById(id);
+           return ResponseEntity.ok("L'evento è stato cancellato");
+        };
+           return ResponseEntity.notFound().build();
     }
 }
 
