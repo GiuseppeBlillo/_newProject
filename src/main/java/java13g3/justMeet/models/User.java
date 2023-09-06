@@ -23,8 +23,7 @@ public class User {
     @Column(name = "PHONE_NUMBER", nullable = false)
     String phoneNumber;
 
-    public User(Long id, String name, String surname, String photoProfile, String nickname, Integer age, String email, String phoneNumber) {
-        this.id = id;
+    public User(String name, String surname, String photoProfile, String nickname, Integer age, String email, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.photoProfile = photoProfile;
