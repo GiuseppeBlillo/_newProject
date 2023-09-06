@@ -5,6 +5,7 @@ import java13g3.justMeet.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +17,20 @@ public class RegistrationService {
         this.registrationRepository = registrationRepository;
     }
 
-    public void createRegistration(Registration r){
-        if(r!=null) {
+    public void createRegistration(Registration r) throws Exception {
+        if(!r.getUserList().isEmpty() || !r.getDateTime().isAfter(LocalDateTime.now())) {
             registrationRepository.save(r);
+        } else {
+            throw new Exception();
         }
     }
-    public Registration getRegistrationById(Long RegistrationId){
-        return registrationRepository.findById(RegistrationId).orElse(null);
+    public Optional<Registration> getRegistrationById(Long RegistrationId) throws Exception {
+        Optional<Registration> regiTemp = registrationRepository.findById(RegistrationId);
+        if(regiTemp.isPresent()){
+            return regiTemp;
+        } else {
+            throw new Exception();
+        }
     }
     public List<Registration> getAllRegistrations(){
         return registrationRepository.findAll();
@@ -37,7 +45,11 @@ public class RegistrationService {
             return Optional.empty();
         }
     }
-    public void deleteRegistration(Long id){
-        registrationRepository.deleteById(id);
+    public void deleteRegistration(Long id) throws Exception {
+        if (registrationRepository.findById(id).isPresent()){
+            registrationRepository.deleteById(id);
+        } else {
+            throw new Exception();
+        }
     }
 }

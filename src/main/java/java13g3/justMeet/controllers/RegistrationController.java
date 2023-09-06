@@ -20,25 +20,39 @@ class RegistrationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createRegistration(@RequestBody Registration registration){
-        registrationService.createRegistration(registration);
-        return ResponseEntity.ok("Registration added!");
+    public ResponseEntity<String> createRegistration(@RequestBody Registration registration) {
+        try {
+            registrationService.createRegistration(registration);
+            return ResponseEntity.ok("Registrazione aggiunta!");
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("Registrazione non aggiunta, controlla tutti i campi!");
+        }
     }
 
     @GetMapping("retrieve")
-    public ResponseEntity<List<Registration>> registrationList(){
-        return ResponseEntity.ok(registrationService.getAllRegistrations());
+    public ResponseEntity<?> registrationList(){
+        if (!registrationService.getAllRegistrations().isEmpty()) {
+            return ResponseEntity.ok(registrationService.getAllRegistrations());
+        } else {
+            return ResponseEntity.badRequest().body("Non sono presenti registrazioni!");
+        }
     }
 
     @GetMapping("/retrieve/{id}")
-    public ResponseEntity<Registration> getRegistrationById(@PathVariable("id") Long registrationId){
-        return ResponseEntity.ok(registrationService.getRegistrationById(registrationId));
+    public ResponseEntity<?> getRegistrationById(@PathVariable("id") Long registrationId){
+        try {
+            return ResponseEntity.ok(registrationService.getRegistrationById(registrationId));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Non esiste una registrazione con questo ID");
+        }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp){
-        Optional<Registration> tempReg = registrationService.updateRegistration(id,registrationUp);
-        if (tempReg.isPresent()) {
+    public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) throws Exception {
+        Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
+        if (regiTemp.isPresent()) {
+            registrationService.updateRegistration(id,registrationUp);
             return ResponseEntity.ok("Update della recensione effettuato con successo!");
         } else {
             return ResponseEntity.notFound().build();
@@ -47,7 +61,11 @@ class RegistrationController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteRegistrationById(@PathVariable("id") Long id){
-        registrationService.deleteRegistration(id);
-        return  ResponseEntity.ok("Registrazione eliminata!");
+        try {
+            registrationService.deleteRegistration(id);
+            return  ResponseEntity.ok("Registrazione eliminata!");
+        } catch (Exception e) {
+            return  ResponseEntity.badRequest().body("Non esiste alcuna registrazione con questo ID");
+        }
     }
 }
