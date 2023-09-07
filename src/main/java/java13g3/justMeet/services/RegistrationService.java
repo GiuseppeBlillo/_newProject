@@ -45,11 +45,11 @@ public class RegistrationService {
             return Optional.empty();
         }
     }
-    public Optional<Object> deleteRegistration(Long id){
+    public Optional<Registration> deleteRegistration(Long id){
         Optional<Registration> regiTemp = registrationRepository.findById(id);
         if (regiTemp.isPresent()) {
             registrationRepository.deleteById(id);
-            return Optional.of(regiTemp);
+            return regiTemp;
         } else {
             return Optional.empty();
         }
