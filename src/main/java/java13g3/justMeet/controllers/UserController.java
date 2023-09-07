@@ -21,52 +21,98 @@ class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-       userService.createUser(user);
+        userService.createUser(user);
         return ResponseEntity.ok("Utente aggiunto");
     }
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.retrieveAllUsers());
+        if (!userService.retrieveAllUsers().isEmpty()) {
+            return ResponseEntity.ok(userService.retrieveAllUsers());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
-
+//non torna la badRequest
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.retrieveUserById(id));
+        if (userService.retrieveUserById(id).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserById(id));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/name/{name}")
     public ResponseEntity<Optional<List<User>>> getUserByName(@PathVariable("name") String userName) {
-        return ResponseEntity.ok(userService.retrieveUserByName(userName));
+        if (userService.retrieveUserByName(userName).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByName(userName));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/surname/{surname}")
     public ResponseEntity<Optional<List<User>>> getUserBySurname(@PathVariable("surname") String userSurname) {
-        return ResponseEntity.ok(userService.retrieveUserBySurname(userSurname));
+        if (userService.retrieveUserBySurname(userSurname).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserBySurname(userSurname));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/photo/{photo}")
     public ResponseEntity<Optional<List<User>>> getUserByPhoto(@PathVariable("photo") String userPhoto) {
-        return ResponseEntity.ok(userService.retrieveUserByPhotoProfile(userPhoto));
+        if (userService.retrieveUserByPhotoProfile(userPhoto).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByPhotoProfile(userPhoto));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/nickname/{nickname}")
     public ResponseEntity<Optional<List<User>>> getUserByNickname(@PathVariable("nickname") String userNickname) {
-        return ResponseEntity.ok(userService.retrieveUserByNickname(userNickname));
+        if (userService.retrieveUserByNickname(userNickname).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByNickname(userNickname));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/age/{age}")
     public ResponseEntity<Optional<List<User>>> getUserByAge(@PathVariable("age") int age) {
-        return ResponseEntity.ok(userService.retrieveUserByAge(age));
+        if (userService.retrieveUserByAge(age).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByAge(age));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/email/{email}")
     public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable("email") String userEmail) {
-        return ResponseEntity.ok(userService.retrieveUserByEmail(userEmail));
+        if (userService.retrieveUserByEmail(userEmail).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByEmail(userEmail));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
     @GetMapping("/retrieve/phonenumber/{phonenumber}")
     public ResponseEntity<Optional<User>> getUserByPhoneNumber(@PathVariable("phonenumber") String phoneNumber) {
-        return ResponseEntity.ok(userService.retrieveUserByPhoneNumbers(phoneNumber));
+        if (userService.retrieveUserByPhoneNumbers(phoneNumber).isPresent()) {
+            return ResponseEntity.ok(userService.retrieveUserByPhoneNumbers(phoneNumber));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @RequestBody User user) {
-        userService.updateUser(id, user);
-        return ResponseEntity.ok("Utente aggiornato");
+        if (userService.updateUser(id, user).isPresent()) {
+            return ResponseEntity.ok("Utente aggiornato");
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/delete/{id}")

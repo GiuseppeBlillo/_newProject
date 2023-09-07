@@ -17,20 +17,35 @@ public class ReviewService {
     ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
-    public void createReview(Review r){
-        if(r!=null) {
+    public void createReview(Review r) throws Exception {
+        if (r.getFieldText().isEmpty() || r.getPhotos().isEmpty() || r.getRating() == null || r.getRegistrationId() == null) {
+            throw new Exception();
+        } else{
             reviewRepository.save(r);
         }
     }
-    public Review getReviewById(Long reviewId){
-        return reviewRepository.findById(reviewId).orElse(null);
+
+    public Optional<Review> getReviewById(Long reviewId) {
+        if (reviewRepository.findById(reviewId).isPresent()) {
+            return reviewRepository.findById(reviewId);
+        } else {
+            return Optional.empty();
+        }
     }
-    public List<Review> getReviewByRating(RatingEnum stars){
-        return reviewRepository.findByRating(stars);
+    public Optional<List<Review>> getReviewByRating(RatingEnum stars) {
+        List<Review> reviews = reviewRepository.findByRating(stars);
+        if (!reviews.isEmpty()) {
+            return Optional.of(reviews);
+        }
+        return Optional.empty();
     }
 
-    public List<Review> getAllReviews(){
-        return reviewRepository.findAll();
+    public Optional<List<Review>> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        if (!reviews.isEmpty()) {
+            return Optional.of(reviews);
+        }
+        return Optional.empty();
     }
 
     public Optional<Review> updateReview(Long id, Review currentReview) {
@@ -45,7 +60,11 @@ public class ReviewService {
             return Optional.empty();
         }
     }
-    public void deleteReview(Long id){
-        reviewRepository.deleteById(id);
+    public void deleteReview(Long id) throws Exception {
+        if (reviewRepository.findById(id).isPresent()) {
+            reviewRepository.deleteById(id);
+        } else {
+            throw new Exception();
+        }
     }
 }
