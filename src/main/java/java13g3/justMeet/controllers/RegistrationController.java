@@ -35,23 +35,24 @@ class RegistrationController {
         if (!registrationService.getAllRegistrations().isEmpty()) {
             return ResponseEntity.ok(registrationService.getAllRegistrations());
         } else {
-            return ResponseEntity.badRequest().body("Non sono presenti registrazioni!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non sono presenti registrazioni!");
         }
     }
 
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<?> getRegistrationById(@PathVariable("id") Long registrationId){
-        try {
+        Optional<Registration> regiTemp = registrationService.getRegistrationById(registrationId);
+        if (!regiTemp.isEmpty()) {
             return ResponseEntity.ok(registrationService.getRegistrationById(registrationId));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body("Non esiste una registrazione con questo ID");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID");
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) throws Exception {
+    public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) {
         Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
-        if (regiTemp.isPresent()) {
+        if (!regiTemp.isEmpty()) {
             registrationService.updateRegistration(id,registrationUp);
             return ResponseEntity.ok("Update della recensione effettuato con successo!");
         } else {
@@ -60,12 +61,13 @@ class RegistrationController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteRegistrationById(@PathVariable("id") Long id){
-        try {
+    public ResponseEntity<String> deleteRegistrationById(@PathVariable("id") Long id) {
+        Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
+        if (!regiTemp.isEmpty()) {
             registrationService.deleteRegistration(id);
             return  ResponseEntity.ok("Registrazione eliminata!");
-        } catch (Exception e) {
-            return  ResponseEntity.badRequest().body("Non esiste alcuna registrazione con questo ID");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID, pertanto non è stato possibile eliminarla");
         }
     }
 }

@@ -24,12 +24,12 @@ public class RegistrationService {
             throw new Exception();
         }
     }
-    public Optional<Registration> getRegistrationById(Long RegistrationId) throws Exception {
+    public Optional<Registration> getRegistrationById(Long RegistrationId){
         Optional<Registration> regiTemp = registrationRepository.findById(RegistrationId);
         if(regiTemp.isPresent()){
             return regiTemp;
         } else {
-            throw new Exception();
+            return Optional.empty();
         }
     }
     public List<Registration> getAllRegistrations(){
@@ -45,11 +45,13 @@ public class RegistrationService {
             return Optional.empty();
         }
     }
-    public void deleteRegistration(Long id) throws Exception {
-        if (registrationRepository.findById(id).isPresent()){
+    public Optional<Object> deleteRegistration(Long id){
+        Optional<Registration> regiTemp = registrationRepository.findById(id);
+        if (regiTemp.isPresent()) {
             registrationRepository.deleteById(id);
+            return Optional.of(regiTemp);
         } else {
-            throw new Exception();
+            return Optional.empty();
         }
     }
 }
