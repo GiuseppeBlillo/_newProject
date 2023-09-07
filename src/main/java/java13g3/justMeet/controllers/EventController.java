@@ -22,9 +22,12 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createEvent(@RequestBody Event event) {
-        eventService.createEvent(event);
-        return ResponseEntity.ok("Aggiunto evento");
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        if(eventService.createEvent(event).isPresent()) {
+            return ResponseEntity.ok(event);
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/retrieve")
@@ -91,20 +94,22 @@ public class EventController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateEventById(@PathVariable("id") Long id, @RequestBody Event e) {
-        Optional<Event> updateEvent = eventService.updateEvent(id,e);
+    public ResponseEntity<Optional<Event>> updateEventById(@PathVariable("id") Long id, @RequestBody Event event) {
+        Optional<Event> updateEvent = eventService.updateEvent(id,event);
         if (updateEvent.isPresent()){
-            return ResponseEntity.ok("Update dell'evento effettuato con successo!");
+            eventService.updateEvent(id,event);
+            return ResponseEntity.ok(updateEvent);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEventById(@PathVariable("id") Long id) {
-        if(eventService.retrieveEventById(id).isPresent()){
+    public ResponseEntity<Optional<Event>> deleteEventById(@PathVariable("id") Long id) {
+        Optional<Event> optionalEvent = eventService.deleteEventById(id);
+        if(optionalEvent.isPresent()){
            eventService.deleteEventById(id);
-           return ResponseEntity.ok("L'evento è stato cancellato");
+           return ResponseEntity.ok(optionalEvent);
         };
            return ResponseEntity.notFound().build();
     }
