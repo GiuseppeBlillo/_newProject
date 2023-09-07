@@ -3,7 +3,6 @@ package java13g3.justMeet.controllers;
 import java13g3.justMeet.models.Registration;
 import java13g3.justMeet.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +19,11 @@ class RegistrationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createRegistration(@RequestBody Registration registration) {
-        try {
-            registrationService.createRegistration(registration);
-            return ResponseEntity.ok("Registrazione aggiunta!");
-        }
-        catch (Exception e){
-            return ResponseEntity.badRequest().body("Registrazione non aggiunta, controlla tutti i campi!");
+    public ResponseEntity<Registration> createRegistration(@RequestBody Registration registration) {
+        if(registrationService.createRegistration(registration).isPresent()){
+            return ResponseEntity.ok(registration);
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -35,39 +32,39 @@ class RegistrationController {
         if (!registrationService.getAllRegistrations().isEmpty()) {
             return ResponseEntity.ok(registrationService.getAllRegistrations());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non sono presenti registrazioni!");
+            return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<?> getRegistrationById(@PathVariable("id") Long registrationId){
         Optional<Registration> regiTemp = registrationService.getRegistrationById(registrationId);
-        if (!regiTemp.isEmpty()) {
-            return ResponseEntity.ok(registrationService.getRegistrationById(registrationId));
+        if (regiTemp.isPresent()) {
+            return ResponseEntity.ok(regiTemp);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID");
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) {
+    public ResponseEntity<Optional<Registration>> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) {
         Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
-        if (!regiTemp.isEmpty()) {
+        if (regiTemp.isPresent()) {
             registrationService.updateRegistration(id,registrationUp);
-            return ResponseEntity.ok("Update della recensione effettuato con successo!");
+            return ResponseEntity.ok(regiTemp);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID, pertanto non è stato possibile modificarla");
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteRegistrationById(@PathVariable("id") Long id) {
+    public ResponseEntity<Optional<Registration>> deleteRegistrationById(@PathVariable("id") Long id) {
         Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
-        if (!regiTemp.isEmpty()) {
+        if (regiTemp.isPresent()) {
             registrationService.deleteRegistration(id);
-            return  ResponseEntity.ok("Registrazione eliminata!");
+            return  ResponseEntity.ok(regiTemp);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID, pertanto non è stato possibile eliminarla");
+            return ResponseEntity.notFound().build();
         }
     }
 }

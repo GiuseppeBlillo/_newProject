@@ -17,20 +17,17 @@ public class RegistrationService {
         this.registrationRepository = registrationRepository;
     }
 
-    public void createRegistration(Registration r) throws Exception {
+    public Optional<Registration> createRegistration(Registration r) {
+        Optional<Registration> regiTemp = Optional.of(r);
         if(!r.getUserList().isEmpty() || !r.getDateTime().isAfter(LocalDateTime.now())) {
             registrationRepository.save(r);
-        } else {
-            throw new Exception();
-        }
-    }
-    public Optional<Registration> getRegistrationById(Long RegistrationId){
-        Optional<Registration> regiTemp = registrationRepository.findById(RegistrationId);
-        if(regiTemp.isPresent()){
             return regiTemp;
         } else {
             return Optional.empty();
         }
+    }
+    public Optional<Registration> getRegistrationById(Long RegistrationId){
+        return registrationRepository.findById(RegistrationId);
     }
     public List<Registration> getAllRegistrations(){
         return registrationRepository.findAll();
