@@ -3,10 +3,10 @@ package java13g3.justMeet.controllers;
 import java13g3.justMeet.models.Registration;
 import java13g3.justMeet.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +30,7 @@ class RegistrationController {
         }
     }
 
-    @GetMapping("retrieve")
+    @GetMapping("/retrieve")
     public ResponseEntity<?> registrationList(){
         if (!registrationService.getAllRegistrations().isEmpty()) {
             return ResponseEntity.ok(registrationService.getAllRegistrations());
@@ -55,7 +55,7 @@ class RegistrationController {
             registrationService.updateRegistration(id,registrationUp);
             return ResponseEntity.ok("Update della recensione effettuato con successo!");
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Non esiste una registrazione con questo ID, pertanto non è stato possibile modificarla");
         }
     }
 
