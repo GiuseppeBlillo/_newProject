@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class ReviewService {
     ReviewRepository reviewRepository;
@@ -17,12 +16,17 @@ public class ReviewService {
     ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
-    public void createReview(Review r) throws Exception {
+    public Optional<Review> createReview(Review r) {
+        Optional<Review> optionalReview = Optional.of(r);
         if (r.getFieldText().isEmpty() || r.getPhotos().isEmpty() || r.getRating() == null || r.getRegistrationId() == null) {
-            throw new Exception();
+            return Optional.empty();
         } else{
             reviewRepository.save(r);
+            return optionalReview;
         }
+    }
+    public List<Review> getAllReviews() {
+        return reviewRepository.findAll();
     }
 
     public Optional<Review> getReviewById(Long reviewId) {
@@ -34,18 +38,11 @@ public class ReviewService {
     }
     public Optional<List<Review>> getReviewByRating(RatingEnum stars) {
         List<Review> reviews = reviewRepository.findByRating(stars);
-        if (!reviews.isEmpty()) {
+        if (reviews.isEmpty()) {
+            return Optional.empty();
+        } else {
             return Optional.of(reviews);
         }
-        return Optional.empty();
-    }
-
-    public Optional<List<Review>> getAllReviews() {
-        List<Review> reviews = reviewRepository.findAll();
-        if (!reviews.isEmpty()) {
-            return Optional.of(reviews);
-        }
-        return Optional.empty();
     }
 
     public Optional<Review> updateReview(Long id, Review currentReview) {
@@ -60,11 +57,14 @@ public class ReviewService {
             return Optional.empty();
         }
     }
-    public void deleteReview(Long id) throws Exception {
-        if (reviewRepository.findById(id).isPresent()) {
+    public Optional<Review> deleteReview(long id){
+        Optional<Review> deleteReview = reviewRepository.findById(id);
+        if (deleteReview.isPresent()){
             reviewRepository.deleteById(id);
-        } else {
-            throw new Exception();
+            return deleteReview;
+        }else {
+            return Optional.empty();
         }
     }
+
 }

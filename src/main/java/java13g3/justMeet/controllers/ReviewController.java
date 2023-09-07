@@ -1,6 +1,7 @@
 package java13g3.justMeet.controllers;
 
 import java13g3.justMeet.enumerations.RatingEnum;
+import java13g3.justMeet.models.Event;
 import java13g3.justMeet.models.Review;
 import java13g3.justMeet.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +22,21 @@ class ReviewController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createReview(@RequestBody Review review){
-        try {
-            reviewService.createReview(review);
-            return ResponseEntity.ok("Recensione creata!");
-        }catch (Exception e){
-            return (ResponseEntity<String>) ResponseEntity.badRequest().body("Recensione non compilata correttamente!");
+    public ResponseEntity<Review> createReview(@RequestBody Review review){
+        if(reviewService.createReview(review).isPresent()) {
+            return ResponseEntity.ok(review);
+        }else {
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/retrieve")
-    public ResponseEntity<Optional<List<Review>>> reviewList(){
-        try{
-            return ResponseEntity.ok(reviewService.getAllReviews());
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> getAllReview(){
+        List<Review> reviews = reviewService.getAllReviews();
+        if (!reviews.isEmpty()) {
+            return ResponseEntity.ok(reviews);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -43,36 +44,39 @@ class ReviewController {
     public ResponseEntity<Optional<Review>> getReviewById(@PathVariable("id") Long reviewId){
         if (reviewService.getReviewById(reviewId).isPresent()){
             return ResponseEntity.ok(reviewService.getReviewById(reviewId));
-        } else return ResponseEntity.badRequest().build();
+        } else return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/rating/{rating}")
-    public ResponseEntity<Optional<List<Review>>> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars){
-        try{
-            return ResponseEntity.ok(reviewService.getReviewByRating(stars));
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars) {
+        Optional<List<Review>> reviewsOptional = reviewService.getReviewByRating(stars);
+        if (reviewsOptional.isPresent()) {
+            List<Review> reviews = reviewsOptional.get();
+            return ResponseEntity.ok(reviews);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
-        try{
-            reviewService.updateReview(id, r);
-            return ResponseEntity.ok("Recensione aggiornata!");
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("Impossibile aggiornare la recensione!");
+    public ResponseEntity<Optional<Review>> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
+        Optional<Review> updatedReview = reviewService.updateReview(id, r);
+        if (updatedReview.isPresent()) {
+            reviewService.updateReview(id,r);
+            return ResponseEntity.ok(updatedReview);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteReviewById(@PathVariable("id") Long id){
-        try{
+    public ResponseEntity<Optional<Review>> deleteReviewById(@PathVariable("id") Long id) {
+        Optional<Review> optionalReview = reviewService.deleteReview(id);
+        if(optionalReview.isPresent()){
             reviewService.deleteReview(id);
-            return ResponseEntity.ok("Recensione cancellata!");
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body("Impossibile cancellare la recensione!");
-        }
+            return ResponseEntity.ok(optionalReview);
+        };
+        return ResponseEntity.notFound().build();
     }
 
 }
