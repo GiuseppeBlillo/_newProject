@@ -3,6 +3,7 @@ package java13g3.justMeet.controllers;
 import java13g3.justMeet.models.User;
 import java13g3.justMeet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,12 @@ class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        userService.createUser(user);
-        return ResponseEntity.ok("Utente aggiunto");
+        try {
+            userService.createUser(user);
+            return ResponseEntity.ok("Utente aggiunto!");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("Utente non aggiunto, controlla tutti i campi!");
+        }
     }
 
     @GetMapping("/retrieve")
@@ -30,16 +35,16 @@ class UserController {
         if (!userService.retrieveAllUsers().isEmpty()) {
             return ResponseEntity.ok(userService.retrieveAllUsers());
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
-//non torna la badRequest
+
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable("id") Long id) {
         if (userService.retrieveUserById(id).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserById(id));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -48,7 +53,7 @@ class UserController {
         if (userService.retrieveUserByName(userName).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByName(userName));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -57,7 +62,7 @@ class UserController {
         if (userService.retrieveUserBySurname(userSurname).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserBySurname(userSurname));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -66,7 +71,7 @@ class UserController {
         if (userService.retrieveUserByPhotoProfile(userPhoto).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByPhotoProfile(userPhoto));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -75,7 +80,7 @@ class UserController {
         if (userService.retrieveUserByNickname(userNickname).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByNickname(userNickname));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -84,7 +89,7 @@ class UserController {
         if (userService.retrieveUserByAge(age).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByAge(age));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -93,7 +98,7 @@ class UserController {
         if (userService.retrieveUserByEmail(userEmail).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByEmail(userEmail));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -102,22 +107,27 @@ class UserController {
         if (userService.retrieveUserByPhoneNumbers(phoneNumber).isPresent()) {
             return ResponseEntity.ok(userService.retrieveUserByPhoneNumbers(phoneNumber));
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @RequestBody User user) {
         if (userService.updateUser(id, user).isPresent()) {
-            return ResponseEntity.ok("Utente aggiornato");
+            return ResponseEntity.ok("Utente aggiornato!");
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Impossibile aggiornare l'utente!");
         }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable("id") Long id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.ok("Utente eliminato");
+        if(userService.retrieveUserById(id).isPresent()){
+            userService.deleteUserById(id);
+            return ResponseEntity.ok("Utente eliminato");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
