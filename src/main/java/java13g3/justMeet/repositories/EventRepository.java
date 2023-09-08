@@ -13,5 +13,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByCategory(String category);
     List<Event> findByEventDate(Date date);
     List<Event> findByAddressApi(String addressApi);
-    List<Event> findByLanguage(LanguageEnum language);
+    List<Event> findByLanguage(LanguageEnum language );
 }
