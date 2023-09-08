@@ -22,7 +22,11 @@ class UserController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.retrieveAllUsers());
+        if (!userService.retrieveAllUsers().isEmpty()){
+            return ResponseEntity.ok(userService.retrieveAllUsers());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/retrieve/{id}")

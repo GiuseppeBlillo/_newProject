@@ -23,14 +23,20 @@ class ReviewController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Review>> getAllReviews() {
-        return ResponseEntity.ok(reviewService.getAllReviews());
+        if (!reviewService.getAllReviews().isEmpty()){
+            return ResponseEntity.ok(reviewService.getAllReviews());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Optional<Review>> getReviewById(@PathVariable("id") Long reviewId){
         if (reviewService.getReviewById(reviewId).isPresent()){
             return ResponseEntity.ok(reviewService.getReviewById(reviewId));
-        } else return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/retrieve/rating/{rating}")
