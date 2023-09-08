@@ -13,27 +13,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/review")
 class ReviewController {
-    private ReviewService reviewService;
     @Autowired
-    ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
+    private ReviewService reviewService;
     @PostMapping("/create")
     public ResponseEntity<Review> createReview(@RequestBody Review review){
-        if(reviewService.createReview(review).isPresent()) {
-            return ResponseEntity.ok(review);
-        }else {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(reviewService.createReview(review));
     }
     @GetMapping("/retrieve")
-    public ResponseEntity<?> getAllReview(){
-        List<Review> reviews = reviewService.getAllReviews();
-        if (!reviews.isEmpty()) {
-            return ResponseEntity.ok(reviews);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<Review>> getAllReviews() {
+        return ResponseEntity.ok(reviewService.getAllReviews());
     }
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Optional<Review>> getReviewById(@PathVariable("id") Long reviewId){
@@ -42,21 +30,17 @@ class ReviewController {
         } else return ResponseEntity.notFound().build();
     }
     @GetMapping("/retrieve/rating/{rating}")
-    public ResponseEntity<?> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars) {
-        Optional<List<Review>> reviewsOptional = reviewService.getReviewByRating(stars);
-        if (reviewsOptional.isPresent()) {
-            List<Review> reviews = reviewsOptional.get();
-            return ResponseEntity.ok(reviews);
+    public ResponseEntity<List<Review>> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars) {
+        if (!reviewService.getReviewByRating(stars).isEmpty()) {
+            return ResponseEntity.ok(reviewService.getReviewByRating(stars));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<Optional<Review>> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
-        Optional<Review> updatedReview = reviewService.updateReview(id, r);
-        if (updatedReview.isPresent()) {
-            reviewService.updateReview(id,r);
-            return ResponseEntity.ok(updatedReview);
+    public ResponseEntity<?> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
+        if (reviewService.updateReview(id,r).isPresent()){
+            return ResponseEntity.ok(reviewService.updateReview(id, r));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -67,7 +51,7 @@ class ReviewController {
         if(optionalReview.isPresent()){
             reviewService.deleteReview(id);
             return ResponseEntity.ok(optionalReview);
-        }
+        };
         return ResponseEntity.notFound().build();
     }
 }
