@@ -14,25 +14,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/event")
 public class EventController {
-    private EventService eventService;
-
     @Autowired
-    EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
+    private EventService eventService;
 
     @PostMapping("/create")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        if(eventService.createEvent(event).isPresent()) {
-            return ResponseEntity.ok(event);
-        }else {
-            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(eventService.createEvent(event));
         }
-    }
+
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Event>> getAllEvent() {
-        if( eventService.retrieveAllEvents().size() >=1){
+        if( !eventService.retrieveAllEvents().isEmpty()){
             return ResponseEntity.ok(eventService.retrieveAllEvents());
         }else {
             return ResponseEntity.notFound().build();
@@ -49,44 +42,44 @@ public class EventController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Optional<Event>> getEventsByName(@PathVariable("name") String name) {
-        if(eventService.retrieveEventByName(name).isPresent()){
+    public ResponseEntity<List<Event>> getEventsByName(@PathVariable("name") String name) {
+        if (!eventService.retrieveEventByName(name).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByName(name));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/category/{name}")
-    public ResponseEntity<Optional<Event>> getEventsByCategory(@PathVariable("name") String category) {
-        if(eventService.retrieveEventByCategory(category).isPresent()){
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Event>> getEventsByCategory(@PathVariable("category") String category) {
+        if (!eventService.retrieveEventByCategory(category).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByCategory(category));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<Optional<Event>> getEventsByDate(@PathVariable("date") Date date) {
-        if(eventService.retrieveEventByEventDate(date).isPresent()){
+    public ResponseEntity<List<Event>> getEventsByDate(@PathVariable("date") Date date) {
+        if (!eventService.retrieveEventByEventDate(date).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByEventDate(date));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/addressApi/{address}")
-    public ResponseEntity<Optional<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
-        if(eventService.retrieveEventByAddressApi(address).isPresent()){
+    public ResponseEntity<List<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
+        if(!eventService.retrieveEventByAddressApi(address).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByAddressApi(address));
         }else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/language/{id}")
-    public ResponseEntity<Optional<Event>> getEventsByLanguage(@PathVariable("id") LanguageEnum language) {
-        if(eventService.retrieveEventByLanguage(language).isPresent()){
+    @GetMapping("/language/{language}")
+    public ResponseEntity<List<Event>> getEventsByLanguage(@PathVariable("language") LanguageEnum language) {
+        if(!eventService.retrieveEventByLanguage(language).isEmpty()){
             return ResponseEntity.ok(eventService.retrieveEventByLanguage(language));
         }else {
             return ResponseEntity.notFound().build();
@@ -95,24 +88,22 @@ public class EventController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Optional<Event>> updateEventById(@PathVariable("id") Long id, @RequestBody Event event) {
-        Optional<Event> updateEvent = eventService.updateEvent(id,event);
-        if (updateEvent.isPresent()){
-            eventService.updateEvent(id,event);
-            return ResponseEntity.ok(updateEvent);
-        } else {
+        if (eventService.updateEvent(id, event).isPresent()) {
+            return ResponseEntity.ok(eventService.updateEvent(id, event));
+        }else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Optional<Event>> deleteEventById(@PathVariable("id") Long id) {
-        Optional<Event> optionalEvent = eventService.deleteEventById(id);
-        if(optionalEvent.isPresent()){
-           eventService.deleteEventById(id);
-           return ResponseEntity.ok(optionalEvent);
-        };
-           return ResponseEntity.notFound().build();
+    public ResponseEntity<?> deleteEventById(@PathVariable("id") Long id) {
+        if (eventService.retrieveEventById(id).isPresent()) {
+            eventService.deleteEventById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
+    }
 
 
