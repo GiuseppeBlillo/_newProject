@@ -12,12 +12,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/registration")
 class RegistrationController {
-    private RegistrationService registrationService;
-
     @Autowired
-    RegistrationController(RegistrationService registrationService) {
-        this.registrationService = registrationService;
-    }
+    private RegistrationService registrationService;
 
     @PostMapping("/create")
     public ResponseEntity<Registration> createRegistration(@RequestBody Registration registration) {
