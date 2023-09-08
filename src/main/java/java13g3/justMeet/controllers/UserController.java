@@ -3,7 +3,6 @@ package java13g3.justMeet.controllers;
 import java13g3.justMeet.models.User;
 import java13g3.justMeet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +18,14 @@ class UserController {
     UserController(UserService userService) {
         this.userService = userService;
     }
-
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        try {
-            userService.createUser(user);
-            return ResponseEntity.ok("Utente aggiunto!");
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("Utente non aggiunto, controlla tutti i campi!");
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (userService.createUser(user).isPresent()) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
-
     @GetMapping("/retrieve")
     public ResponseEntity<List<User>> getAllUsers() {
         if (!userService.retrieveAllUsers().isEmpty()) {
@@ -112,22 +108,24 @@ class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateUserById(@PathVariable("id") Long id, @RequestBody User user) {
-        if (userService.updateUser(id, user).isPresent()) {
-            return ResponseEntity.ok("Utente aggiornato!");
+    public ResponseEntity<Optional<User>> updateUserById(@PathVariable("id") Long id, @RequestBody User user) {
+        Optional<User> userTemp = userService.retrieveUserById(id);
+        if (userTemp.isPresent()) {
+            userService.updateUser(id, user);
+            return ResponseEntity.ok(userTemp);
         } else {
-            return ResponseEntity.badRequest().body("Impossibile aggiornare l'utente!");
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("id") Long id) {
-        if(userService.retrieveUserById(id).isPresent()){
+    public ResponseEntity<Optional<User>> deleteUserById(@PathVariable("id") Long id) {
+        Optional<User> userTemp = userService.retrieveUserById(id);
+        if(userTemp.isPresent()){
             userService.deleteUserById(id);
-            return ResponseEntity.ok("Utente eliminato");
+            return ResponseEntity.ok(userTemp);
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
 }

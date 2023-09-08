@@ -17,7 +17,6 @@ class RegistrationController {
     RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }
-
     @PostMapping("/create")
     public ResponseEntity<Registration> createRegistration(@RequestBody Registration registration) {
         if(registrationService.createRegistration(registration).isPresent()){
@@ -26,7 +25,6 @@ class RegistrationController {
             return ResponseEntity.badRequest().build();
         }
     }
-
     @GetMapping("/retrieve")
     public ResponseEntity<?> registrationList(){
         if (!registrationService.getAllRegistrations().isEmpty()) {
@@ -35,7 +33,6 @@ class RegistrationController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<?> getRegistrationById(@PathVariable("id") Long registrationId){
         Optional<Registration> regiTemp = registrationService.getRegistrationById(registrationId);
@@ -45,7 +42,6 @@ class RegistrationController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<Optional<Registration>> updateRegistration(@PathVariable("id") Long id, @RequestBody Registration registrationUp) {
         Optional<Registration> regiTemp = registrationService.getRegistrationById(id);
@@ -56,7 +52,6 @@ class RegistrationController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Optional<Registration>> deleteRegistrationById(@PathVariable("id") Long id) {
         Optional<Registration> regiTemp = registrationService.getRegistrationById(id);

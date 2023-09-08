@@ -16,7 +16,6 @@ public class RegistrationService {
     public RegistrationService(RegistrationRepository registrationRepository) {
         this.registrationRepository = registrationRepository;
     }
-
     public Optional<Registration> createRegistration(Registration r) {
         Optional<Registration> regiTemp = Optional.of(r);
         if(!r.getUserList().isEmpty() || !r.getDateTime().isAfter(LocalDateTime.now())) {

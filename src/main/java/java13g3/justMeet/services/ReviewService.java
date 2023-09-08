@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ReviewService {
     ReviewRepository reviewRepository;
@@ -28,7 +29,6 @@ public class ReviewService {
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
-
     public Optional<Review> getReviewById(Long reviewId) {
         if (reviewRepository.findById(reviewId).isPresent()) {
             return reviewRepository.findById(reviewId);
@@ -44,7 +44,6 @@ public class ReviewService {
             return Optional.of(reviews);
         }
     }
-
     public Optional<Review> updateReview(Long id, Review currentReview) {
         Optional<Review> updateReview = reviewRepository.findById(id);
         if (updateReview.isPresent()){
@@ -66,5 +65,4 @@ public class ReviewService {
             return Optional.empty();
         }
     }
-
 }
