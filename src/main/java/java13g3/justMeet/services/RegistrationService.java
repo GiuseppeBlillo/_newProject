@@ -11,43 +11,35 @@ import java.util.Optional;
 
 @Service
 public class RegistrationService {
-    RegistrationRepository registrationRepository;
     @Autowired
-    public RegistrationService(RegistrationRepository registrationRepository) {
-        this.registrationRepository = registrationRepository;
+    private RegistrationRepository registrationRepository;
+
+    public Registration createRegistration(Registration r) {
+        return registrationRepository.save(r);
     }
-    public Optional<Registration> createRegistration(Registration r) {
-        Optional<Registration> regiTemp = Optional.of(r);
-        if(!r.getUserList().isEmpty() || !r.getDateTime().isAfter(LocalDateTime.now())) {
-            registrationRepository.save(r);
-            return regiTemp;
-        } else {
-            return Optional.empty();
-        }
-    }
-    public Optional<Registration> getRegistrationById(Long RegistrationId){
-        return registrationRepository.findById(RegistrationId);
-    }
-    public List<Registration> getAllRegistrations(){
+
+    public List<Registration> getAllRegistrations() {
         return registrationRepository.findAll();
     }
+
+    public Optional<Registration> getRegistrationById(Long RegistrationId) {
+        return registrationRepository.findById(RegistrationId);
+    }
+
     public Optional<Registration> updateRegistration(Long id, Registration currentRegistration) {
         Optional<Registration> updateRegistration = registrationRepository.findById(id);
-        if (updateRegistration.isPresent()){
+        if (updateRegistration.isPresent()) {
             updateRegistration.get().setDateTime(currentRegistration.getDateTime());
             registrationRepository.save(updateRegistration.get());
-            return updateRegistration;
+            return Optional.of(registrationRepository.save(updateRegistration.get()));
         } else {
             return Optional.empty();
         }
     }
-    public Optional<Registration> deleteRegistration(Long id){
-        Optional<Registration> regiTemp = registrationRepository.findById(id);
-        if (regiTemp.isPresent()) {
+
+    public void deleteRegistration(Long id) {
+        if (registrationRepository.findById(id).isPresent()) {
             registrationRepository.deleteById(id);
-            return regiTemp;
-        } else {
-            return Optional.empty();
         }
     }
 }
