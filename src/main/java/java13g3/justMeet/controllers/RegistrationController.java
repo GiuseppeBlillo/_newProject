@@ -22,7 +22,11 @@ class RegistrationController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Registration>> registrationList() {
-        return ResponseEntity.ok(registrationService.getAllRegistrations());
+        if (!registrationService.getAllRegistrations().isEmpty()){
+            return ResponseEntity.ok(registrationService.getAllRegistrations());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/retrieve/{id}")

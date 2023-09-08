@@ -15,20 +15,24 @@ import java.util.Optional;
 class ReviewController {
     @Autowired
     private ReviewService reviewService;
+
     @PostMapping("/create")
     public ResponseEntity<Review> createReview(@RequestBody Review review){
         return ResponseEntity.ok(reviewService.createReview(review));
     }
+
     @GetMapping("/retrieve")
     public ResponseEntity<List<Review>> getAllReviews() {
         return ResponseEntity.ok(reviewService.getAllReviews());
     }
+
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Optional<Review>> getReviewById(@PathVariable("id") Long reviewId){
         if (reviewService.getReviewById(reviewId).isPresent()){
             return ResponseEntity.ok(reviewService.getReviewById(reviewId));
         } else return ResponseEntity.notFound().build();
     }
+
     @GetMapping("/retrieve/rating/{rating}")
     public ResponseEntity<List<Review>> retrieveReviewByRating(@PathVariable("rating") RatingEnum stars) {
         if (!reviewService.getReviewByRating(stars).isEmpty()) {
@@ -37,6 +41,7 @@ class ReviewController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
         if (reviewService.updateReview(id,r).isPresent()){
@@ -45,13 +50,15 @@ class ReviewController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Optional<Review>> deleteReviewById(@PathVariable("id") Long id) {
         Optional<Review> optionalReview = reviewService.deleteReview(id);
         if(optionalReview.isPresent()){
             reviewService.deleteReview(id);
             return ResponseEntity.ok(optionalReview);
-        };
-        return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

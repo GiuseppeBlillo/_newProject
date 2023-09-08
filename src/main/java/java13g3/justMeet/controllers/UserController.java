@@ -35,7 +35,7 @@ class UserController {
     }
 
     @GetMapping("/retrieve/name/{name}")
-    public ResponseEntity<List<User>> getUserByName(@PathVariable("name") String userName) {
+    public ResponseEntity<List<User>> getUsersByName(@PathVariable("name") String userName) {
         if(!userService.retrieveUserByName(userName).isEmpty()){
             return ResponseEntity.ok(userService.retrieveUserByName(userName));
         } else {
@@ -44,7 +44,7 @@ class UserController {
     }
 
     @GetMapping("/retrieve/surname/{surname}")
-    public ResponseEntity<List<User>> getUserBySurname(@PathVariable("surname") String userSurname) {
+    public ResponseEntity<List<User>> getUsersBySurname(@PathVariable("surname") String userSurname) {
         if (!userService.retrieveUserBySurname(userSurname).isEmpty()){
             return ResponseEntity.ok(userService.retrieveUserBySurname(userSurname));
         } else {
@@ -53,7 +53,7 @@ class UserController {
     }
 
     @GetMapping("/retrieve/nickname/{nickname}")
-    public ResponseEntity<List<User>> getUserByNickname(@PathVariable("nickname") String userNickname) {
+    public ResponseEntity<List<User>> getUsersByNickname(@PathVariable("nickname") String userNickname) {
         if (!userService.retrieveUserByNickname(userNickname).isEmpty()){
             return ResponseEntity.ok(userService.retrieveUserByNickname(userNickname));
         } else {
@@ -62,7 +62,7 @@ class UserController {
     }
 
     @GetMapping("/retrieve/age/{age}")
-    public ResponseEntity<List<User>> getUserByAge(@PathVariable("age") int age) {
+    public ResponseEntity<List<User>> getUsersByAge(@PathVariable("age") int age) {
         if (age >= 0 && age <=100){
             if (!userService.retrieveUserByAge(age).isEmpty()) {
                 return ResponseEntity.ok(userService.retrieveUserByAge(age));

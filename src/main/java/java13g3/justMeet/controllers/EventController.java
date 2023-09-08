@@ -25,9 +25,9 @@ public class EventController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Event>> getAllEvent() {
-        if( !eventService.retrieveAllEvents().isEmpty()){
+        if(!eventService.retrieveAllEvents().isEmpty()){
             return ResponseEntity.ok(eventService.retrieveAllEvents());
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -105,5 +105,3 @@ public class EventController {
         }
     }
 }
-
-
