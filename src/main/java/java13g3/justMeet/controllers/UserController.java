@@ -5,6 +5,7 @@ import java13g3.justMeet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -100,6 +101,15 @@ class UserController {
     public ResponseEntity<?> updateUserById(@PathVariable("id") Long id, @RequestBody User user) {
         if (userService.updateUser(id, user).isPresent()){
             return ResponseEntity.ok(userService.updateUser(id, user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/update/photo/{id}")
+    public ResponseEntity<?> updateUserPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile multipartFile) {
+        if (userService.updateUserWithPhoto(id, multipartFile).isPresent()){
+            return ResponseEntity.ok(userService.updateUserWithPhoto(id, multipartFile));
         } else {
             return ResponseEntity.notFound().build();
         }

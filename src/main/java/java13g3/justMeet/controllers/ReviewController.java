@@ -6,6 +6,7 @@ import java13g3.justMeet.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +53,15 @@ class ReviewController {
     public ResponseEntity<?> updateReview(@PathVariable("id") Long id, @RequestBody Review r){
         if (reviewService.updateReview(id,r).isPresent()){
             return ResponseEntity.ok(reviewService.updateReview(id, r));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/update/photo/{id}")
+    public ResponseEntity<?> updateReviewPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile multipartFile) {
+        if (reviewService.updateReviewWithPhoto(id, multipartFile).isPresent()){
+            return ResponseEntity.ok(reviewService.updateReviewWithPhoto(id, multipartFile));
         } else {
             return ResponseEntity.notFound().build();
         }

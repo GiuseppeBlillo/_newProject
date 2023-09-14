@@ -18,7 +18,7 @@ public class Registration {
     @ManyToOne
     @JoinColumn(name = "EVENT_ID")
     private Event eventId;
-    @Column(name = "PARTECIPATION_DATE")
+    @Column(name = "PARTICIPATION_DATE")
     @JsonFormat(pattern = "HH:mm:ss dd-MM-yyyy")
     private LocalDateTime dateTime;
 

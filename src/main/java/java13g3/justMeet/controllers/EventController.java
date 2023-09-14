@@ -6,6 +6,7 @@ import java13g3.justMeet.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/retrieve/name/{name}")
     public ResponseEntity<List<Event>> getEventsByName(@PathVariable("name") String name) {
         if (!eventService.retrieveEventByName(name).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByName(name));
@@ -50,7 +51,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/retrieve/category/{category}")
     public ResponseEntity<List<Event>> getEventsByCategory(@PathVariable("category") String category) {
         if (!eventService.retrieveEventByCategory(category).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByCategory(category));
@@ -59,7 +60,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/date/{date}")
+    @GetMapping("/retrieve/date/{date}")
     public ResponseEntity<List<Event>> getEventsByDate(@PathVariable("date") Date date) {
         if (!eventService.retrieveEventByEventDate(date).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByEventDate(date));
@@ -68,7 +69,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/addressApi/{address}")
+    @GetMapping("/retrieve/addressApi/{address}")
     public ResponseEntity<List<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
         if(!eventService.retrieveEventByAddressApi(address).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByAddressApi(address));
@@ -77,7 +78,7 @@ public class EventController {
         }
     }
 
-    @GetMapping("/language/{language}")
+    @GetMapping("/retrieve/language/{language}")
     public ResponseEntity<List<Event>> getEventsByLanguage(@PathVariable("language") LanguageEnum language) {
         if(!eventService.retrieveEventByLanguage(language).isEmpty()){
             return ResponseEntity.ok(eventService.retrieveEventByLanguage(language));
@@ -94,6 +95,14 @@ public class EventController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/update/photo/{id}")
+    public ResponseEntity<?> updateEventWithPhoto(@PathVariable("id") Long id, @RequestParam("file") MultipartFile multipartFile) {
+        if (eventService.updateEventWithPhoto(id, multipartFile).isPresent()){
+            return ResponseEntity.ok(eventService.updateEventWithPhoto(id, multipartFile));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEventById(@PathVariable("id") Long id) {
@@ -104,4 +113,5 @@ public class EventController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
