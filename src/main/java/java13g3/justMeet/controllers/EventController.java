@@ -2,6 +2,7 @@ package java13g3.justMeet.controllers;
 
 import java13g3.justMeet.enumerations.LanguageEnum;
 import java13g3.justMeet.models.Event;
+import java13g3.justMeet.models.User;
 import java13g3.justMeet.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +74,7 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsByAddressApi(@PathVariable("address") String address) {
         if(!eventService.retrieveEventByAddressApi(address).isEmpty()) {
             return ResponseEntity.ok(eventService.retrieveEventByAddressApi(address));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -82,7 +83,7 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsByLanguage(@PathVariable("language") LanguageEnum language) {
         if(!eventService.retrieveEventByLanguage(language).isEmpty()){
             return ResponseEntity.ok(eventService.retrieveEventByLanguage(language));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -91,7 +92,7 @@ public class EventController {
     public ResponseEntity<Optional<Event>> updateEventById(@PathVariable("id") Long id, @RequestBody Event event) {
         if (eventService.updateEvent(id, event).isPresent()) {
             return ResponseEntity.ok(eventService.updateEvent(id, event));
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -103,13 +104,23 @@ public class EventController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/update/user_list/{id}")
+    public ResponseEntity<Optional<Event>> updateEventUsersListById(@PathVariable("id") Long id, @RequestBody User user) {
+        if (eventService.updateEventUserList(id, user).isPresent()) {
+            return ResponseEntity.ok(eventService.updateEventUserList(id, user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteEventById(@PathVariable("id") Long id) {
-        if (eventService.retrieveEventById(id).isPresent()) {
-            eventService.deleteEventById(id);
+    public ResponseEntity<?> deleteEventById(@PathVariable("id") Long id, @RequestParam Long idUser) {
+        try {
+            eventService.deleteEventById(id, idUser);
             return ResponseEntity.ok().build();
-        } else {
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }

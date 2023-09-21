@@ -27,35 +27,32 @@ public class Event {
     @Column(name = "DATE")
     @JsonFormat(pattern = "HH:mm:ss dd-MM-yyyy")
     private LocalDateTime eventDate;
-    @Column(name = "EVENT_API")
-    private String eventApi;
+    @ManyToOne
+    @JoinColumn(name = "ID_MAKER")
+    private User idMaker;
     @Column(name = "ADDRESS_API")
     private String addressApi;
     @Column(name = "ISPRIVATE")
     private Boolean isPrivate;
     @OneToMany
     @JoinColumn(name = "EVENT_ID")
-    private List<User> userId;
+    private List<User> userList;
 
     public Event(String name, String description, CategoryEnum category, LanguageEnum language,
-                 String coverPhoto, LocalDateTime eventDate, String eventApi, String addressApi, Boolean isPrivate, List<User> userId) {
+                 String coverPhoto, LocalDateTime eventDate, User idMaker, String addressApi, Boolean isPrivate, List<User> userList) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.language = language;
         this.coverPhoto = coverPhoto;
         this.eventDate = eventDate;
-        this.eventApi = eventApi;
+        this.idMaker = idMaker;
         this.addressApi = addressApi;
         this.isPrivate = isPrivate;
-        this.userId = userId;
+        this.userList = userList;
     }
 
     public Event() {
-    }
-
-    public Event(String name) {
-        this.name = name;
     }
 
     public Long getId() {
@@ -114,12 +111,12 @@ public class Event {
         this.eventDate = eventDate;
     }
 
-    public String getEventApi() {
-        return eventApi;
+    public User getIdMaker() {
+        return idMaker;
     }
 
-    public void setEventApi(String eventApi) {
-        this.eventApi = eventApi;
+    public void setIdMaker(User idMaker) {
+        this.idMaker = idMaker;
     }
 
     public String getAddressApi() {
@@ -138,12 +135,12 @@ public class Event {
         isPrivate = aPrivate;
     }
 
-    public List<User> getUserId() {
-        return userId;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserId(List<User> userId) {
-        this.userId = userId;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
 }

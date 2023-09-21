@@ -10,6 +10,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java13g3.justMeet.config.GoogleMapsConfig;
 import java13g3.justMeet.enumerations.LanguageEnum;
 import java13g3.justMeet.models.Event;
+import java13g3.justMeet.models.User;
 import java13g3.justMeet.repositories.EventRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,7 @@ public class EventService {
             updateEvent.get().setLanguage(currentEvent.getLanguage());
             updateEvent.get().setCoverPhoto(currentEvent.getCoverPhoto());
             updateEvent.get().setEventDate(currentEvent.getEventDate());
-            updateEvent.get().setEventApi(currentEvent.getEventApi());
+            updateEvent.get().setIdMaker(currentEvent.getIdMaker());
             String newLocation = updateEventWithLocation(currentEvent.getAddressApi());
             updateEvent.get().setAddressApi(newLocation);
             updateEvent.get().setPrivate(currentEvent.getPrivate());
@@ -149,10 +150,15 @@ public class EventService {
         return "https://www.google.com/maps/place/" + y;
     }
 
-    public void deleteEventById(Long id) {
-        if (eventRepository.findById(id).isPresent()) {
-            eventRepository.deleteById(id);
-        }
+    public void deleteEventById(Long id, Long idDeleter) throws Exception {
+        Optional<Event> eventTemp = eventRepository.findById(id);
+        if (eventTemp.isPresent()) {
+            if (eventTemp.get().getIdMaker().getId().equals(idDeleter)) {
+                eventRepository.deleteById(id);
+            } else {
+                throw new IllegalAccessException();
+            }
+        } else throw new Exception();
     }
 
     public Optional<Event> updateEventWithPhoto(Long id, MultipartFile o) {
@@ -177,6 +183,17 @@ public class EventService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Event> updateEventUserList(Long id, User user){
+        Optional<Event> eventTemp = eventRepository.findById(id);
+        if (eventTemp.isPresent()){
+            Event event = eventTemp.get();
+            event.getUserList().add(user);
+            eventRepository.save(event);
+            return Optional.of(event);
         }
         return Optional.empty();
     }
