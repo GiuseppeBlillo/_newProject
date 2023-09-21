@@ -105,9 +105,9 @@ public class EventController {
         }
     }
     @PutMapping("/update/user_list/{id}")
-    public ResponseEntity<Optional<Event>> updateEventUsersListById(@PathVariable("id") Long id, @RequestBody User user) {
+    public ResponseEntity<List<User>> updateEventUsersListById(@PathVariable("id") Long id, @RequestBody User user) {
         if (eventService.updateEventUserList(id, user).isPresent()) {
-            return ResponseEntity.ok(eventService.updateEventUserList(id, user));
+            return ResponseEntity.ok(eventService.retrieveEventById(id).get().getUserList());
         } else {
             return ResponseEntity.notFound().build();
         }
